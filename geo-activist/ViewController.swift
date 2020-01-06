@@ -10,18 +10,20 @@ import UIKit
 import HealthKit
 
 class ViewController: UIViewController {
-        
-    let healthKitStore: HKHealthStore = HKHealthStore()
-    var workouts: [HKWorkout] = []
-    var workoutRoutes: [HKWorkoutRoute] = []
     
-    let readDataTypes: Set<HKObjectType> = [
+    private let tableView = UITableView()
+    private let healthKitStore: HKHealthStore = HKHealthStore()
+    private let activityNames = HKNameDictionary.get()
+    private var workouts: [HKWorkout] = []
+    private var workoutRoutes: [HKWorkoutRoute] = []
+    
+    private let readDataTypes: Set<HKObjectType> = [
         HKWorkoutType.workoutType(),
         HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.distanceWalkingRunning)!,
         HKSeriesType.workoutRoute(),
     ]
     
-    func readWorkouts(_ completion: (([AnyObject]?, NSError?) -> Void)!) {
+    private func readWorkouts(_ completion: (([AnyObject]?, NSError?) -> Void)!) {
         let sortDescriptor = NSSortDescriptor(key:HKSampleSortIdentifierStartDate, ascending: false)
         let sampleQuery = HKSampleQuery(
             sampleType: HKWorkoutType.workoutType(),
@@ -40,7 +42,7 @@ class ViewController: UIViewController {
     }
     
     
-    func readWorkoutRoutes(_ completion: (([AnyObject]?, NSError?) -> Void)!) {
+    private func readWorkoutRoutes(_ completion: (([AnyObject]?, NSError?) -> Void)!) {
         let sortDescriptor = NSSortDescriptor(key:HKSampleSortIdentifierStartDate, ascending: false)
         let sampleQuery = HKSampleQuery(
             sampleType: HKSeriesType.workoutRoute(),
@@ -60,8 +62,12 @@ class ViewController: UIViewController {
     
     
     override func viewDidLoad() {
-        print("hello")
         super.viewDidLoad()
+        
+        self.tableView.frame = view.bounds
+        self.tableView.dataSource = self
+        view.addSubview(tableView)
+        
         self.healthKitStore.requestAuthorization(toShare: nil, read: self.readDataTypes) {
             (success, error) -> Void in
             if success == false {
@@ -76,6 +82,7 @@ class ViewController: UIViewController {
                     }
                     
                     self.workouts = results as! [HKWorkout]
+                    self.tableView.reloadData()
                     
                     DispatchQueue.main.async(execute: { () -> Void in
                         for workout in self.workouts {
@@ -97,7 +104,7 @@ class ViewController: UIViewController {
                     self.workoutRoutes = results as! [HKWorkoutRoute]
                     DispatchQueue.main.async(execute: { () -> Void in
                         for route in self.workoutRoutes {
-                            print("")
+//                            print("")
                         }
                     });
                 })
@@ -105,7 +112,21 @@ class ViewController: UIViewController {
             }
         }
     }
-    
-    
 }
 
+extension ViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.workouts.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        let workout = self.workouts[indexPath.row]
+        let activityName = self.activityNames[workout.workoutActivityType.rawValue] ?? "no data"
+        let distance = String(format: "%@", workout.totalDistance ?? "no data")
+        let energyBurn = String(format: "%@", workout.totalEnergyBurned ?? "no data")
+        cell.textLabel?.textAlignment = NSTextAlignment.justified
+        cell.textLabel?.text = activityName + " " + distance + " " + energyBurn
+        return cell
+    }
+}
