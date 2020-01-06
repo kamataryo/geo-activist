@@ -1,0 +1,474 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		819EBC0323C313EC006C0E88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819EBC0223C313EC006C0E88 /* AppDelegate.swift */; };
+		819EBC0523C313EC006C0E88 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819EBC0423C313EC006C0E88 /* SceneDelegate.swift */; };
+		819EBC0723C313EC006C0E88 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819EBC0623C313EC006C0E88 /* ViewController.swift */; };
+		819EBC0A23C313EC006C0E88 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 819EBC0823C313EC006C0E88 /* Main.storyboard */; };
+		819EBC0C23C313ED006C0E88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 819EBC0B23C313ED006C0E88 /* Assets.xcassets */; };
+		819EBC0F23C313ED006C0E88 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 819EBC0D23C313ED006C0E88 /* LaunchScreen.storyboard */; };
+		819EBC1A23C313ED006C0E88 /* geo_activistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819EBC1923C313ED006C0E88 /* geo_activistTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		819EBC1623C313ED006C0E88 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 819EBBF723C313EC006C0E88 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 819EBBFE23C313EC006C0E88;
+			remoteInfo = "geo-activist";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		819EBBFF23C313EC006C0E88 /* geo-activist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "geo-activist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		819EBC0223C313EC006C0E88 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		819EBC0423C313EC006C0E88 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		819EBC0623C313EC006C0E88 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		819EBC0923C313EC006C0E88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		819EBC0B23C313ED006C0E88 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		819EBC0E23C313ED006C0E88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		819EBC1023C313ED006C0E88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		819EBC1523C313ED006C0E88 /* geo-activistTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "geo-activistTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		819EBC1923C313ED006C0E88 /* geo_activistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = geo_activistTests.swift; sourceTree = "<group>"; };
+		819EBC1B23C313ED006C0E88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		819EBBFC23C313EC006C0E88 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		819EBC1223C313ED006C0E88 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		819EBBF623C313EC006C0E88 = {
+			isa = PBXGroup;
+			children = (
+				819EBC0123C313EC006C0E88 /* geo-activist */,
+				819EBC1823C313ED006C0E88 /* geo-activistTests */,
+				819EBC0023C313EC006C0E88 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		819EBC0023C313EC006C0E88 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				819EBBFF23C313EC006C0E88 /* geo-activist.app */,
+				819EBC1523C313ED006C0E88 /* geo-activistTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		819EBC0123C313EC006C0E88 /* geo-activist */ = {
+			isa = PBXGroup;
+			children = (
+				819EBC0223C313EC006C0E88 /* AppDelegate.swift */,
+				819EBC0423C313EC006C0E88 /* SceneDelegate.swift */,
+				819EBC0623C313EC006C0E88 /* ViewController.swift */,
+				819EBC0823C313EC006C0E88 /* Main.storyboard */,
+				819EBC0B23C313ED006C0E88 /* Assets.xcassets */,
+				819EBC0D23C313ED006C0E88 /* LaunchScreen.storyboard */,
+				819EBC1023C313ED006C0E88 /* Info.plist */,
+			);
+			path = "geo-activist";
+			sourceTree = "<group>";
+		};
+		819EBC1823C313ED006C0E88 /* geo-activistTests */ = {
+			isa = PBXGroup;
+			children = (
+				819EBC1923C313ED006C0E88 /* geo_activistTests.swift */,
+				819EBC1B23C313ED006C0E88 /* Info.plist */,
+			);
+			path = "geo-activistTests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		819EBBFE23C313EC006C0E88 /* geo-activist */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 819EBC1E23C313ED006C0E88 /* Build configuration list for PBXNativeTarget "geo-activist" */;
+			buildPhases = (
+				819EBBFB23C313EC006C0E88 /* Sources */,
+				819EBBFC23C313EC006C0E88 /* Frameworks */,
+				819EBBFD23C313EC006C0E88 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "geo-activist";
+			productName = "geo-activist";
+			productReference = 819EBBFF23C313EC006C0E88 /* geo-activist.app */;
+			productType = "com.apple.product-type.application";
+		};
+		819EBC1423C313ED006C0E88 /* geo-activistTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 819EBC2123C313ED006C0E88 /* Build configuration list for PBXNativeTarget "geo-activistTests" */;
+			buildPhases = (
+				819EBC1123C313ED006C0E88 /* Sources */,
+				819EBC1223C313ED006C0E88 /* Frameworks */,
+				819EBC1323C313ED006C0E88 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				819EBC1723C313ED006C0E88 /* PBXTargetDependency */,
+			);
+			name = "geo-activistTests";
+			productName = "geo-activistTests";
+			productReference = 819EBC1523C313ED006C0E88 /* geo-activistTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		819EBBF723C313EC006C0E88 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1130;
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = "鎌田遼";
+				TargetAttributes = {
+					819EBBFE23C313EC006C0E88 = {
+						CreatedOnToolsVersion = 11.3;
+					};
+					819EBC1423C313ED006C0E88 = {
+						CreatedOnToolsVersion = 11.3;
+						TestTargetID = 819EBBFE23C313EC006C0E88;
+					};
+				};
+			};
+			buildConfigurationList = 819EBBFA23C313EC006C0E88 /* Build configuration list for PBXProject "geo-activist" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 819EBBF623C313EC006C0E88;
+			productRefGroup = 819EBC0023C313EC006C0E88 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				819EBBFE23C313EC006C0E88 /* geo-activist */,
+				819EBC1423C313ED006C0E88 /* geo-activistTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		819EBBFD23C313EC006C0E88 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				819EBC0F23C313ED006C0E88 /* LaunchScreen.storyboard in Resources */,
+				819EBC0C23C313ED006C0E88 /* Assets.xcassets in Resources */,
+				819EBC0A23C313EC006C0E88 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		819EBC1323C313ED006C0E88 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		819EBBFB23C313EC006C0E88 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				819EBC0723C313EC006C0E88 /* ViewController.swift in Sources */,
+				819EBC0323C313EC006C0E88 /* AppDelegate.swift in Sources */,
+				819EBC0523C313EC006C0E88 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		819EBC1123C313ED006C0E88 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				819EBC1A23C313ED006C0E88 /* geo_activistTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		819EBC1723C313ED006C0E88 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 819EBBFE23C313EC006C0E88 /* geo-activist */;
+			targetProxy = 819EBC1623C313ED006C0E88 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		819EBC0823C313EC006C0E88 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				819EBC0923C313EC006C0E88 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		819EBC0D23C313ED006C0E88 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				819EBC0E23C313ED006C0E88 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		819EBC1C23C313ED006C0E88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		819EBC1D23C313ED006C0E88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		819EBC1F23C313ED006C0E88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JSW9FG3V24;
+				INFOPLIST_FILE = "geo-activist/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "kamataryo.geo-activist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		819EBC2023C313ED006C0E88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JSW9FG3V24;
+				INFOPLIST_FILE = "geo-activist/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "kamataryo.geo-activist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		819EBC2223C313ED006C0E88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JSW9FG3V24;
+				INFOPLIST_FILE = "geo-activistTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "kamataryo.geo-activistTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/geo-activist.app/geo-activist";
+			};
+			name = Debug;
+		};
+		819EBC2323C313ED006C0E88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JSW9FG3V24;
+				INFOPLIST_FILE = "geo-activistTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "kamataryo.geo-activistTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/geo-activist.app/geo-activist";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		819EBBFA23C313EC006C0E88 /* Build configuration list for PBXProject "geo-activist" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				819EBC1C23C313ED006C0E88 /* Debug */,
+				819EBC1D23C313ED006C0E88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		819EBC1E23C313ED006C0E88 /* Build configuration list for PBXNativeTarget "geo-activist" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				819EBC1F23C313ED006C0E88 /* Debug */,
+				819EBC2023C313ED006C0E88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		819EBC2123C313ED006C0E88 /* Build configuration list for PBXNativeTarget "geo-activistTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				819EBC2223C313ED006C0E88 /* Debug */,
+				819EBC2323C313ED006C0E88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 819EBBF723C313EC006C0E88 /* Project object */;
+}
