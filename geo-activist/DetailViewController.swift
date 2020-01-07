@@ -15,6 +15,7 @@ class DetailViewController: UIViewController {
     
     var workout: HKWorkout? = nil
     var workoutName: String = ""
+    var workoutStart: String = ""
     private let healthKitStore: HKHealthStore = HKHealthStore()
     private var workoutRoutes: [HKWorkoutRoute] = []
     
@@ -27,10 +28,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let formatter = DateFormatter()
-        formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "ydMMM", options: 0, locale: Locale(identifier: "ja_JP"))
-        self.dateLabel?.text = formatter.string(from: self.workout!.startDate)
-        
+        self.dateLabel?.text = self.workoutStart
         self.workoutNameLabel?.text = self.workoutName
         self.distanceLabel?.text = String(format: "%@", workout?.totalDistance ?? "no data")
         self.energyBurnLabel?.text = String(format: "%@", workout?.totalEnergyBurned ?? "no data")
@@ -48,7 +46,11 @@ class DetailViewController: UIViewController {
             self.workoutRoutes = results! as! [HKWorkoutRoute]
             
             if(self.workoutRoutes.count == 0) {
-                print("No routes")
+                DispatchQueue.main.async(execute: { () -> Void in
+                    let alert = UIAlertController(title: "No routes found", message: "This workout seems not to have ant route data.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    self.present(alert, animated: true)
+                })
                 return;
             }
             
@@ -79,15 +81,13 @@ class DetailViewController: UIViewController {
                 
                 if done {
                     
-                    
                     DispatchQueue.main.async(execute: { () -> Void in
-                         let activityViewController = UIActivityViewController(activityItems: [allLocations], applicationActivities: nil)
-                         activityViewController.popoverPresentationController?.sourceView = self.view // prevent crash
-                         self.present(activityViewController, animated: true, completion: nil)
+                        let activityViewController = UIActivityViewController(activityItems: [allLocations], applicationActivities: nil)
+                        activityViewController.popoverPresentationController?.sourceView = self.view // prevent crash
+                        self.present(activityViewController, animated: true, completion: nil)
                         
                     });
-                                        
-
+                    
                     // The query returned all the location data associated with the route.
                     // Do something with the complete data set.
                 }

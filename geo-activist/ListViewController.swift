@@ -18,6 +18,8 @@ class ListViewController: UIViewController {
     private let healthKitStore: HKHealthStore = HKHealthStore()
     private let activityNames = HKNameDictionary.get()
     private var workouts: [HKWorkout] = []
+    private var workoutsForDate: Dictionary<String, [HKWorkout]> = [:]
+    private var workoutDatesArray: [String] = []
     private let readDataTypes: Set<HKObjectType> = [
         HKWorkoutType.workoutType(),
         HKSeriesType.workoutRoute(),
@@ -64,6 +66,23 @@ class ListViewController: UIViewController {
                     }
                     
                     self.workouts = results as! [HKWorkout]
+
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "ydMMM", options: 0, locale: Locale(identifier: "ja_JP"))
+                    
+                    self.workouts.forEach { workout in
+                        let workoutDate = formatter.string(from: workout.startDate)
+                        if((self.workoutsForDate[workoutDate]) != nil) {
+                            self.workoutsForDate[workoutDate]!.append(workout)
+                        } else {
+                            self.workoutsForDate[workoutDate] = [workout]
+                        }
+                    }
+                    for (key, _) in self.workoutsForDate {
+                        self.workoutDatesArray.append(key)
+                     }
+                    self.workoutDatesArray.sort()
+                    
                     
                     DispatchQueue.main.async(execute: { () -> Void in
                         self.tableView.reloadData()
@@ -75,25 +94,36 @@ class ListViewController: UIViewController {
 }
 
 extension ListViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.workoutDatesArray.count
+    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.workoutDatesArray[section]
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.workouts.count
+        let workoutDate = self.workoutDatesArray[section]
+        return self.workoutsForDate[workoutDate]!.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        let workout = self.workouts[indexPath.row]
-        let activityName = self.activityNames[workout.workoutActivityType.rawValue] ?? "no data"
-        let distance = String(format: "%@", workout.totalDistance ?? "no data")
-        let energyBurn = String(format: "%@", workout.totalEnergyBurned ?? "no data")
-        cell.textLabel?.textAlignment = NSTextAlignment.justified
-        cell.textLabel?.text = activityName + " " + distance + " " + energyBurn
+        let workoutDate = self.workoutDatesArray[indexPath.section]
+        let workout = self.workoutsForDate[workoutDate]![indexPath.row]
+        let activityName = self.activityNames[workout.workoutActivityType.rawValue] ?? "(no data)"
+        let distance = String(format: "%@", workout.totalDistance ?? "(no data)")
+        
+        cell.textLabel?.text = activityName + " " + distance
+        
         return cell
     }
 }
 
 extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let workout = self.workouts[indexPath.row]
+        let workoutDate = self.workoutDatesArray[indexPath.section]
+        let workout = self.workoutsForDate[workoutDate]![indexPath.row]
         self.performSegue(withIdentifier: "toDetail", sender: workout)
     }
     
@@ -103,6 +133,10 @@ extension ListViewController: UITableViewDelegate {
             let workout = sender as? HKWorkout
             destination.workout = workout
             destination.workoutName = self.activityNames[workout!.workoutActivityType.rawValue] ?? "no data"
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "ydMMM", options: 0, locale: Locale(identifier: "ja_JP"))
+            destination.workoutStart = formatter.string(from: workout!.startDate)
         }
     }
 }
