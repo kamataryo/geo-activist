@@ -107,6 +107,7 @@
                         <outlet property="dateLabel" destination="8cE-O6-kWc" id="sCz-1O-R2g"/>
                         <outlet property="distanceLabel" destination="4i3-eq-nlX" id="jG6-ta-HWe"/>
                         <outlet property="energyBurnLabel" destination="Mla-O0-JYK" id="V3G-Cn-zli"/>
+                        <outlet property="exportButton" destination="H5L-6i-usC" id="DlB-bN-Vtz"/>
                         <outlet property="workoutNameLabel" destination="wpR-xf-t3Z" id="SwE-Mw-09x"/>
                     </connections>
                 </viewController>
