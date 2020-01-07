@@ -30,7 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		819EBBFF23C313EC006C0E88 /* geo-activist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "geo-activist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		819EBBFF23C313EC006C0E88 /* GeoActivist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeoActivist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		819EBC0223C313EC006C0E88 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		819EBC0423C313EC006C0E88 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		819EBC0623C313EC006C0E88 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
@@ -79,7 +79,7 @@
 		819EBC0023C313EC006C0E88 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				819EBBFF23C313EC006C0E88 /* geo-activist.app */,
+				819EBBFF23C313EC006C0E88 /* GeoActivist.app */,
 				819EBC1523C313ED006C0E88 /* geo-activistTests.xctest */,
 			);
 			name = Products;
@@ -136,7 +136,7 @@
 			);
 			name = "geo-activist";
 			productName = "geo-activist";
-			productReference = 819EBBFF23C313EC006C0E88 /* geo-activist.app */;
+			productReference = 819EBBFF23C313EC006C0E88 /* GeoActivist.app */;
 			productType = "com.apple.product-type.application";
 		};
 		819EBC1423C313ED006C0E88 /* geo-activistTests */ = {
@@ -393,9 +393,9 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "kamataryo.geo-activist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = GeoActivist;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -412,9 +412,9 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "kamataryo.geo-activist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = GeoActivist;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
