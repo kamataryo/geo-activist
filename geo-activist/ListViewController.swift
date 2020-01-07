@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ListViewController.swift
 //  geo-activist
 //
 //  Created by 鎌田遼 on 2020/01/06.
@@ -9,14 +9,16 @@
 import UIKit
 import HealthKit
 
-class ViewController: UIViewController {
+class ListViewController: UIViewController {
     
+    // Views
     private let tableView = UITableView()
+    
+    // HealthKit
     private let healthKitStore: HKHealthStore = HKHealthStore()
     private let activityNames = HKNameDictionary.get()
     private var workouts: [HKWorkout] = []
     private var workoutRoutes: [HKWorkoutRoute] = []
-    
     private let readDataTypes: Set<HKObjectType> = [
         HKWorkoutType.workoutType(),
         HKSeriesType.workoutRoute(),
@@ -67,7 +69,6 @@ class ViewController: UIViewController {
         self.tableView.frame = view.bounds
         self.tableView.dataSource = self
         view.addSubview(tableView)
-        
         self.tableView.delegate = self
         
         self.healthKitStore.requestAuthorization(toShare: nil, read: self.readDataTypes) {
@@ -104,7 +105,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITableViewDataSource {
+extension ListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.workouts.count
     }
@@ -121,10 +122,18 @@ extension ViewController: UITableViewDataSource {
     }
 }
 
-extension ViewController: UITableViewDelegate {
+extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let workout = self.workouts[indexPath.row]
-        let activityName = self.activityNames[workout.workoutActivityType.rawValue] ?? "no data"
-        print(activityName)
+        self.performSegue(withIdentifier: "toDetail", sender: workout)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDetail" {
+            let destination = segue.destination as! DetailViewController
+            let workout = sender as? HKWorkout
+            destination.workout = workout
+            destination.workoutName = self.activityNames[workout!.workoutActivityType.rawValue] ?? "no data"
+        }
     }
 }
