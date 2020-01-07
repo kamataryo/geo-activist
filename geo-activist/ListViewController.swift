@@ -18,7 +18,6 @@ class ListViewController: UIViewController {
     private let healthKitStore: HKHealthStore = HKHealthStore()
     private let activityNames = HKNameDictionary.get()
     private var workouts: [HKWorkout] = []
-    private var workoutRoutes: [HKWorkoutRoute] = []
     private let readDataTypes: Set<HKObjectType> = [
         HKWorkoutType.workoutType(),
         HKSeriesType.workoutRoute(),
@@ -42,26 +41,6 @@ class ListViewController: UIViewController {
         
         self.healthKitStore.execute(sampleQuery)
     }
-    
-    
-    private func readWorkoutRoutes(_ completion: (([AnyObject]?, NSError?) -> Void)!) {
-        let sortDescriptor = NSSortDescriptor(key:HKSampleSortIdentifierStartDate, ascending: false)
-        let sampleQuery = HKSampleQuery(
-            sampleType: HKSeriesType.workoutRoute(),
-            predicate: nil,
-            limit: 0,
-            sortDescriptors: [sortDescriptor]
-        ) {
-            (sampleQuery, results, error ) -> Void in
-            if error != nil {
-                print("Query Error")
-            }
-            completion!(results,error as NSError?)
-        }
-        
-        self.healthKitStore.execute(sampleQuery)
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,16 +69,6 @@ class ListViewController: UIViewController {
                         self.tableView.reloadData()
                     });
                 })
-                
-                self.readWorkoutRoutes({ (results, error) -> Void in
-                    if( error != nil ) {
-                        print("Error reading workouts: \(String(describing: error?.localizedDescription))")
-                        return;
-                    }
-                    self.workoutRoutes = results as! [HKWorkoutRoute]
-                    DispatchQueue.main.async(execute: { () -> Void in });
-                })
-                
             }
         }
     }
