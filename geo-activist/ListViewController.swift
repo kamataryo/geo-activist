@@ -10,7 +10,7 @@ import UIKit
 import HealthKit
 
 class ListViewController: UIViewController {
-    
+
     // Views
     private let tableView = UITableView()
     
@@ -19,13 +19,14 @@ class ListViewController: UIViewController {
     private let activityNames = HKNameDictionary.get()
     private var workouts: [HKWorkout] = []
     private var workoutsForDate: Dictionary<String, [HKWorkout]> = [:]
-    private var workoutDatesArray: [String] = []
+    private var workoutDateKeysArray: [String] = []
+    private var sectionDateKeyDictionary: Dictionary<String, String> = [:]
     private let readDataTypes: Set<HKObjectType> = [
         HKWorkoutType.workoutType(),
         HKSeriesType.workoutRoute(),
         HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.distanceWalkingRunning)!,
     ]
-    
+
     private func readWorkouts(_ completion: (([AnyObject]?, NSError?) -> Void)!) {
         let sortDescriptor = NSSortDescriptor(key:HKSampleSortIdentifierStartDate, ascending: false)
         let sampleQuery = HKSampleQuery(
@@ -40,80 +41,106 @@ class ListViewController: UIViewController {
             }
             completion!(results,error as NSError?)
         }
-        
         self.healthKitStore.execute(sampleQuery)
+    }
+
+    private func requestPermissionAlert() {
+        DispatchQueue.main.async(execute: { () -> Void in
+             let alert = UIAlertController(title: "ワークアウトへのアクセス権限が必要です", message: "設定 -> ヘルスケア -> データアクセスとデバイスから、GeoActivist にワークアウトのデータを読み出す権限を与えて下さい。", preferredStyle: .alert)
+             alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+             self.present(alert, animated: true)
+         })
+    }
+    
+    private func checkPermissionStatus() -> Bool {
+        var result = true
+        self.readDataTypes.forEach { type in
+            print(type)
+            // TODO: 許可の状態を確認できるようにする
+            print(self.healthKitStore.authorizationStatus(for: type))
+        }
+        return result
+    }
+    
+    private func refresh() {
+        self.readWorkouts({ (results, error) -> Void in
+            if( error != nil ) {
+                print("Error reading workouts: \(String(describing: error?.localizedDescription))")
+                return;
+            }
+
+            self.workouts = results as! [HKWorkout]
+
+            let sectionDateLabelformatter = DateFormatter()
+            sectionDateLabelformatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "ydMMM", options: 0, locale: Locale(identifier: "ja_JP"))
+
+            let sectionDateLabelAsSortKeyformatter = DateFormatter()
+            sectionDateLabelAsSortKeyformatter.dateFormat = "YYYYMMDD"
+            sectionDateLabelAsSortKeyformatter.timeZone = TimeZone.current
+
+            self.workouts.forEach { workout in
+                let workoutDateKey = sectionDateLabelAsSortKeyformatter.string(from: workout.startDate)
+                if((self.workoutsForDate[workoutDateKey]) != nil) {
+                    self.workoutsForDate[workoutDateKey]!.append(workout)
+                } else {
+                    self.workoutsForDate[workoutDateKey] = [workout]
+                    self.sectionDateKeyDictionary[workoutDateKey] = sectionDateLabelformatter.string(from: workout.startDate)
+                }
+            }
+
+            for (key, _) in self.workoutsForDate {
+                self.workoutDateKeysArray.append(key)
+            }
+            self.workoutDateKeysArray.sort(by: >)
+
+
+            DispatchQueue.main.async(execute: { () -> Void in
+                self.tableView.reloadData()
+            });
+        })
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.tableView.frame = view.bounds
         self.tableView.dataSource = self
         view.addSubview(tableView)
         self.tableView.delegate = self
-        
+
         self.healthKitStore.requestAuthorization(toShare: nil, read: self.readDataTypes) {
             (success, error) -> Void in
-            if success == false {
-                print("Ops, We can't get your permission.")
+            if (success == false || !self.checkPermissionStatus()) {
+                self.requestPermissionAlert()
             } else {
-                print("Yeah! We get the permission!")
-                
-                self.readWorkouts({ (results, error) -> Void in
-                    if( error != nil ) {
-                        print("Error reading workouts: \(String(describing: error?.localizedDescription))")
-                        return;
-                    }
-                    
-                    self.workouts = results as! [HKWorkout]
-
-                    let formatter = DateFormatter()
-                    formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "ydMMM", options: 0, locale: Locale(identifier: "ja_JP"))
-                    
-                    self.workouts.forEach { workout in
-                        let workoutDate = formatter.string(from: workout.startDate)
-                        if((self.workoutsForDate[workoutDate]) != nil) {
-                            self.workoutsForDate[workoutDate]!.append(workout)
-                        } else {
-                            self.workoutsForDate[workoutDate] = [workout]
-                        }
-                    }
-                    for (key, _) in self.workoutsForDate {
-                        self.workoutDatesArray.append(key)
-                     }
-                    self.workoutDatesArray.sort()
-                    
-                    
-                    DispatchQueue.main.async(execute: { () -> Void in
-                        self.tableView.reloadData()
-                    });
-                })
+                self.refresh()
             }
         }
     }
 }
 
 extension ListViewController: UITableViewDataSource {
+
+    // TODO: タイトルヘッダを作成し、リロードのアイコンをつける
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.workoutDatesArray.count
+        return self.workoutDateKeysArray.count
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.workoutDatesArray[section]
+        return self.sectionDateKeyDictionary[workoutDateKeysArray[section]]
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let workoutDate = self.workoutDatesArray[section]
+        let workoutDate = self.workoutDateKeysArray[section]
         return self.workoutsForDate[workoutDate]!.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        let workoutDate = self.workoutDatesArray[indexPath.section]
+        let workoutDate = self.workoutDateKeysArray[indexPath.section]
         let workout = self.workoutsForDate[workoutDate]![indexPath.row]
-        let activityName = self.activityNames[workout.workoutActivityType.rawValue] ?? "(no data)"
-        let distance = String(format: "%@", workout.totalDistance ?? "(no data)")
-        
+        let activityName = self.activityNames[workout.workoutActivityType.rawValue]?.ja ?? "(該当なし)"
+        let distance = String(format: "%@", workout.totalDistance ?? "")
+        // TODO: レイアウトをきれいにする。2つのワードが左右に justifyContent されると嬉しい
         cell.textLabel?.text = activityName + " " + distance
         
         return cell
@@ -122,7 +149,7 @@ extension ListViewController: UITableViewDataSource {
 
 extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let workoutDate = self.workoutDatesArray[indexPath.section]
+        let workoutDate = self.workoutDateKeysArray[indexPath.section]
         let workout = self.workoutsForDate[workoutDate]![indexPath.row]
         self.performSegue(withIdentifier: "toDetail", sender: workout)
     }
@@ -132,8 +159,8 @@ extension ListViewController: UITableViewDelegate {
             let destination = segue.destination as! DetailViewController
             let workout = sender as? HKWorkout
             destination.workout = workout
-            destination.workoutName = self.activityNames[workout!.workoutActivityType.rawValue] ?? "no data"
-            
+            destination.workoutName = self.activityNames[workout!.workoutActivityType.rawValue]?.ja ?? "(no data)"
+
             let formatter = DateFormatter()
             formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "ydMMM", options: 0, locale: Locale(identifier: "ja_JP"))
             destination.workoutStart = formatter.string(from: workout!.startDate)

@@ -30,8 +30,8 @@ class DetailViewController: UIViewController {
         
         self.dateLabel?.text = self.workoutStart
         self.workoutNameLabel?.text = self.workoutName
-        self.distanceLabel?.text = String(format: "%@", workout?.totalDistance ?? "no data")
-        self.energyBurnLabel?.text = String(format: "%@", workout?.totalEnergyBurned ?? "no data")
+        self.distanceLabel?.text = String(format: "%@", workout?.totalDistance ?? "")
+        self.energyBurnLabel?.text = String(format: "%@", workout?.totalEnergyBurned ?? "")
         
         self.exportButton.addTarget(self, action: #selector(self.buttonEvent), for: .touchUpInside)
     }
@@ -47,7 +47,7 @@ class DetailViewController: UIViewController {
             
             if(self.workoutRoutes.count == 0) {
                 DispatchQueue.main.async(execute: { () -> Void in
-                    let alert = UIAlertController(title: "No routes found", message: "This workout seems not to have ant route data.", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "ルートが見つかりませんでした", message: "このワークアウトではルートが記録されていないようです。", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                     self.present(alert, animated: true)
                 })
