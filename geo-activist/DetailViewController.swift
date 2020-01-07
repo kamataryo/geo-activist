@@ -30,8 +30,8 @@ class DetailViewController: UIViewController {
         
         self.dateLabel?.text = self.workoutStart
         self.workoutNameLabel?.text = self.workoutName
-        self.distanceLabel?.text = String(format: "%@", workout?.totalDistance ?? "")
-        self.energyBurnLabel?.text = String(format: "%@", workout?.totalEnergyBurned ?? "")
+        self.distanceLabel?.text = String(format: "%@", workout?.totalDistance ?? "データなし")
+        self.energyBurnLabel?.text = String(format: "%@", workout?.totalEnergyBurned ?? "データなし")
         
         self.exportButton.addTarget(self, action: #selector(self.buttonEvent), for: .touchUpInside)
     }

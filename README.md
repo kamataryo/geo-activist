@@ -9,7 +9,7 @@ GPS trace extractor for Activity.app.
 ## features
 
 The trace will be extracted as a CSV file.
-The column will be:
+The columns are:
 
 - `timestamp` as Unix Second
 - `latitude`
