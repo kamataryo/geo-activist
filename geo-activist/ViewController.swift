@@ -19,8 +19,8 @@ class ViewController: UIViewController {
     
     private let readDataTypes: Set<HKObjectType> = [
         HKWorkoutType.workoutType(),
-        HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.distanceWalkingRunning)!,
         HKSeriesType.workoutRoute(),
+        HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.distanceWalkingRunning)!,
     ]
     
     private func readWorkouts(_ completion: (([AnyObject]?, NSError?) -> Void)!) {
@@ -68,6 +68,8 @@ class ViewController: UIViewController {
         self.tableView.dataSource = self
         view.addSubview(tableView)
         
+        self.tableView.delegate = self
+        
         self.healthKitStore.requestAuthorization(toShare: nil, read: self.readDataTypes) {
             (success, error) -> Void in
             if success == false {
@@ -82,17 +84,9 @@ class ViewController: UIViewController {
                     }
                     
                     self.workouts = results as! [HKWorkout]
-                    self.tableView.reloadData()
                     
                     DispatchQueue.main.async(execute: { () -> Void in
-                        for workout in self.workouts {
-                            print(workout.duration)
-                            print(workout.workoutActivityType.rawValue)
-                            print(workout.startDate)
-                            print(workout.endDate)
-                            print(String(format: "Distance   : %@", workout.totalDistance ?? "no data"))
-                            print(String(format: "EnergyBurn : %@", workout.totalEnergyBurned ?? "no data"))
-                        }
+                        self.tableView.reloadData()
                     });
                 })
                 
@@ -102,11 +96,7 @@ class ViewController: UIViewController {
                         return;
                     }
                     self.workoutRoutes = results as! [HKWorkoutRoute]
-                    DispatchQueue.main.async(execute: { () -> Void in
-                        for route in self.workoutRoutes {
-//                            print("")
-                        }
-                    });
+                    DispatchQueue.main.async(execute: { () -> Void in });
                 })
                 
             }
@@ -128,5 +118,13 @@ extension ViewController: UITableViewDataSource {
         cell.textLabel?.textAlignment = NSTextAlignment.justified
         cell.textLabel?.text = activityName + " " + distance + " " + energyBurn
         return cell
+    }
+}
+
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let workout = self.workouts[indexPath.row]
+        let activityName = self.activityNames[workout.workoutActivityType.rawValue] ?? "no data"
+        print(activityName)
     }
 }
