@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "819EBBFE23C313EC006C0E88"
-               BuildableName = "geo-activist.app"
+               BuildableName = "GeoActivist.app"
                BlueprintName = "geo-activist"
                ReferencedContainer = "container:geo-activist.xcodeproj">
             </BuildableReference>
@@ -55,7 +55,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "819EBBFE23C313EC006C0E88"
-            BuildableName = "geo-activist.app"
+            BuildableName = "GeoActivist.app"
             BlueprintName = "geo-activist"
             ReferencedContainer = "container:geo-activist.xcodeproj">
          </BuildableReference>
@@ -72,7 +72,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "819EBBFE23C313EC006C0E88"
-            BuildableName = "geo-activist.app"
+            BuildableName = "GeoActivist.app"
             BlueprintName = "geo-activist"
             ReferencedContainer = "container:geo-activist.xcodeproj">
          </BuildableReference>

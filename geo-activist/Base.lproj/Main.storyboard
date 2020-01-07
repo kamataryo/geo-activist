@@ -39,7 +39,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="アクティビティ">
                                         <attributes>
-                                            <font key="NSFont" size="17" name=".HiraKakuInterface-W3"/>
+                                            <font key="NSFont" metaFont="system" size="17"/>
                                             <font key="NSOriginalFont" metaFont="system" size="17"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
