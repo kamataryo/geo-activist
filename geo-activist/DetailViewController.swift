@@ -16,17 +16,20 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var workoutNameLabel: UILabel!
+    @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet weak var energyBurnLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         let formatter = DateFormatter()
         formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "ydMMM", options: 0, locale: Locale(identifier: "ja_JP"))
         self.dateLabel?.text = formatter.string(from: self.workout!.startDate)
         
         self.workoutNameLabel?.text = self.workoutName
+        self.distanceLabel?.text = String(format: "%@", workout?.totalDistance ?? "no data")
+        self.energyBurnLabel?.text = String(format: "%@", workout?.totalEnergyBurned ?? "no data")
         
-        let distance = String(format: "%@", workout?.totalDistance ?? "no data")
-        let energyBurn = String(format: "%@", workout?.totalEnergyBurned ?? "no data")
+        
     }
 }
