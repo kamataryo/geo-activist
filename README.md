@@ -45,7 +45,7 @@ The columns are:
 
 1. didViewLoaded
 2. (async) requestPermission
-3. (async) query for Workout
+3. (async) query for Workouts
 4. (async, parallel) query for workoutRoute and workoutAnchor
 5. (async) query for Location
 6. build Table Compatible Object
@@ -74,3 +74,13 @@ The columns are:
   }
 }
 ```
+
+[
+0: {
+\_dateSectionSortKey: "20200101",
+dateSectionTitle: "2020 年 1 月 1 日",
+rowItems: [
+
+ ]
+}
+]

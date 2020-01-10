@@ -13,7 +13,6 @@ class ListViewController: UIViewController {
     
     // Views
     private let tableView = UITableView()
-    private let refreshControl = UIRefreshControl()
     
     // HealthKit
     private let healthKitStore: HKHealthStore = HKHealthStore()
@@ -83,9 +82,14 @@ class ListViewController: UIViewController {
             sectionDateLabelAsSortKeyformatter.dateFormat = "YYYYMMDD"
             sectionDateLabelAsSortKeyformatter.timeZone = TimeZone.current
             
+            var workoutCollectionController = WorkoutCollecitonController()
+            
             self.workouts.forEach { workout in
-                let x = WorkoutController(workout: workout)
                 
+                // testing
+                workoutCollectionController.append(workout: workout)
+                
+                                
                 let workoutDateKey = sectionDateLabelAsSortKeyformatter.string(from: workout.startDate)
                 if((self.workoutsForDate[workoutDateKey]) != nil) {
                     self.workoutsForDate[workoutDateKey]!.append(workout)
@@ -94,6 +98,8 @@ class ListViewController: UIViewController {
                     self.sectionDateKeyDictionary[workoutDateKey] = sectionDateLabelformatter.string(from: workout.startDate)
                 }
             }
+            
+            workoutCollectionController.index()
             
             for (key, _) in self.workoutsForDate {
                 self.workoutDateKeysArray.append(key)

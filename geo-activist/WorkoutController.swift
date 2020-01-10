@@ -1,5 +1,5 @@
 //
-//  WorkoutsController.swift
+//  WorkoutController.swift
 //  geo-activist
 //
 //  Created by 鎌田遼 on 2020/01/10.
@@ -12,14 +12,24 @@ import CoreLocation
 
 class WorkoutController {
     static let healthKitStore = HKHealthStore()
+    static let activityNameDictionary = HKNameDictionary.get()
     
     private let workout: HKWorkout
     private var workoutRoute: HKWorkoutRoute? = nil
     private var startLocation: CLLocation? = nil
     
+    public var startDate: Date
+    public var activityName: String
+    public var totalDistance: String
+    public var startLocationName: String = ""
+    
     init(workout: HKWorkout) {
         self.workout = workout
-        
+
+        self.startDate = workout.startDate
+        self.activityName = WorkoutController.activityNameDictionary[workout.workoutActivityType.rawValue]?.ja ?? "(該当なし)"
+        self.totalDistance = String(format: "%@", workout.totalDistance ?? "")
+
         self.readWorkoutRoutes(workout: workout) { (results, error) in
             let workoutRoutes = results as! [HKWorkoutRoute]
             
@@ -30,9 +40,16 @@ class WorkoutController {
                 self.readWorkoutStartLocation(workoutRoute: workoutRoute) { (result, error) in
                     let startLocation = result as! CLLocation
                     self.startLocation = startLocation
+                    
+                    self.readPlaceName(location: startLocation) { startLocationName in
+                        self.startLocationName = startLocationName
+                        
+                        // TODO: how to notify if ready?
+//                        print(self.totalDistance)
+//                        print(startLocationName)
+                    }
                 }
             }
-            print("ready")
         }
     }
     
@@ -53,7 +70,7 @@ class WorkoutController {
         }
         WorkoutController.healthKitStore.execute(sampleQuery)
     }
-    
+        
     private func readWorkoutStartLocation(workoutRoute: HKWorkoutRoute, _ completion: ((AnyObject?, NSError?) -> Void)!) {
         let routeQuery = HKWorkoutRouteQuery(route: workoutRoute) { query, locationsOrNil, done, errorOrNil in
 
@@ -68,5 +85,22 @@ class WorkoutController {
             WorkoutController.healthKitStore.stop(query)
         }
         WorkoutController.healthKitStore.execute(routeQuery)
+    }
+    
+    private func readPlaceName(location: CLLocation, _ compeltion: ((String) -> Void)!) {
+        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+            guard let placemark = placemarks?.first, error == nil else { return }
+            let elements = ([
+                placemark.locality ?? "",
+                placemark.subLocality ?? ""
+            ]).filter { element in
+                return element != "" && element != nil
+            }
+            var startPlaceName = elements.joined(separator: ", ")
+            if startPlaceName == "" {
+                startPlaceName = "(不明な場所)"
+            }
+            compeltion(startPlaceName)
+        }
     }
 }
