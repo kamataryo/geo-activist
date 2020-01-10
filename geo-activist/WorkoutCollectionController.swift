@@ -14,19 +14,21 @@ class WorkoutCollecitonController {
     private var dateSectionTitleFormatter = DateFormatter()
     private var dateSectionSortKeyFormatter = DateFormatter()
          
+    public var sectionTitles: [String] = []
+    public var sectionItemCounts: [Int] = []
+    public var cellItems: [[WorkoutController]] = []
     init() {
-        let dateSectionTitleFormatter = DateFormatter()
         dateSectionTitleFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "ydMMM", options: 0, locale: Locale(identifier: "ja_JP"))
         
         dateSectionSortKeyFormatter.dateFormat = "yyyyMMdd"
         dateSectionSortKeyFormatter.timeZone = TimeZone.current
     }
-    
+        
     public func append(workout: HKWorkout) {
         self.workoutControllers.append(WorkoutController(workout: workout))
     }
     
-    public func index() -> [String] {
+    public func index() {
         var dateGroups = Dictionary<String, [WorkoutController]>()
         var sectionTitleMap = Dictionary<String, String>()
         
@@ -42,8 +44,12 @@ class WorkoutCollecitonController {
         dateGroups.keys.forEach { key in
             dateGroups[key] = dateGroups[key]!.sorted(by: { $0.startDate > $1.startDate })
         }
-        return dateGroups.keys.sorted(by: >)
         
+        // for table compatibility
+        let sortedKeys = dateGroups.keys.sorted(by: >)
+        self.sectionTitles = sortedKeys.map { key in return sectionTitleMap[key]! }
+        self.sectionItemCounts = sortedKeys.map { key in return dateGroups[key]!.count }
+        self.cellItems = sortedKeys.map { key in return dateGroups[key]! }
     }
     
     public func clear() {

@@ -13,9 +13,7 @@ import Social
 
 class DetailViewController: UIViewController {
     
-    var workout: HKWorkout? = nil
-    var workoutName: String = ""
-    var workoutStart: String = ""
+    var workoutController: WorkoutController? = nil
     private let healthKitStore: HKHealthStore = HKHealthStore()
     private var workoutRoutes: [HKWorkoutRoute] = []
     
@@ -28,10 +26,10 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.dateLabel?.text = self.workoutStart
-        self.workoutNameLabel?.text = self.workoutName
-        self.distanceLabel?.text = String(format: "%@", workout?.totalDistance ?? "データなし")
-        self.energyBurnLabel?.text = String(format: "%@", workout?.totalEnergyBurned ?? "データなし")
+//        self.dateLabel?.text = self.workoutController!.startDate
+//        self.workoutNameLabel?.text = self.workoutController!.activityName
+//        self.distanceLabel?.text = String(format: "%@", workout?.totalDistance ?? "データなし")
+//        self.energyBurnLabel?.text = String(format: "%@", workout?.totalEnergyBurned ?? "データなし")
         
         self.exportButton.addTarget(self, action: #selector(self.buttonEvent), for: .touchUpInside)
     }
@@ -102,21 +100,21 @@ class DetailViewController: UIViewController {
     }
     
     private func readWorkoutRoutes(_ completion: (([AnyObject]?, NSError?) -> Void)!) {
-        let sortDescriptor = NSSortDescriptor(key:HKSampleSortIdentifierStartDate, ascending: false)
-        let predicate = HKQuery.predicateForObjects(from: self.workout!)
-        let sampleQuery = HKSampleQuery(
-            sampleType: HKSeriesType.workoutRoute(),
-            predicate: predicate,
-            limit: 0,
-            sortDescriptors: [sortDescriptor]
-        ) {
-            (sampleQuery, results, error ) -> Void in
-            if error != nil {
-                print("Route query error")
-            }
-            completion!(results, error as NSError?)
-        }
-        
-        self.healthKitStore.execute(sampleQuery)
+//        let sortDescriptor = NSSortDescriptor(key:HKSampleSortIdentifierStartDate, ascending: false)
+//        let predicate = HKQuery.predicateForObjects(from: self.workout!)
+//        let sampleQuery = HKSampleQuery(
+//            sampleType: HKSeriesType.workoutRoute(),
+//            predicate: predicate,
+//            limit: 0,
+//            sortDescriptors: [sortDescriptor]
+//        ) {
+//            (sampleQuery, results, error ) -> Void in
+//            if error != nil {
+//                print("Route query error")
+//            }
+//            completion!(results, error as NSError?)
+//        }
+//
+//        self.healthKitStore.execute(sampleQuery)
     }
 }

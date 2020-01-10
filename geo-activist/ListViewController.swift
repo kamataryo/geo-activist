@@ -6,6 +6,7 @@
 //  Copyright © 2020 鎌田遼. All rights reserved.
 //
 
+import Foundation
 import UIKit
 import HealthKit
 
@@ -16,11 +17,7 @@ class ListViewController: UIViewController {
     
     // HealthKit
     private let healthKitStore: HKHealthStore = HKHealthStore()
-    private let activityNames = HKNameDictionary.get()
-    private var workouts: [HKWorkout] = []
-    private var workoutsForDate: Dictionary<String, [HKWorkout]> = [:]
-    private var workoutDateKeysArray: [String] = []
-    private var sectionDateKeyDictionary: Dictionary<String, String> = [:]
+    private var workoutCollectionController = WorkoutCollecitonController()
     private let readDataTypes: Set<HKObjectType> = [
         HKWorkoutType.workoutType(),
         HKSeriesType.workoutRoute(),
@@ -69,42 +66,14 @@ class ListViewController: UIViewController {
     func refresh() {
         self.readWorkouts({ (workouts, error) -> Void in
             if( error != nil ) {
-                print("Error reading workouts: \(String(describing: error?.localizedDescription))")
+                print("Error reading workouts")
                 return;
             }
             
-            self.workouts = workouts! as! [HKWorkout]
+            let workouts = workouts! as! [HKWorkout]
             
-            let sectionDateLabelformatter = DateFormatter()
-            sectionDateLabelformatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "ydMMM", options: 0, locale: Locale(identifier: "ja_JP"))
-            
-            let sectionDateLabelAsSortKeyformatter = DateFormatter()
-            sectionDateLabelAsSortKeyformatter.dateFormat = "YYYYMMDD"
-            sectionDateLabelAsSortKeyformatter.timeZone = TimeZone.current
-            
-            var workoutCollectionController = WorkoutCollecitonController()
-            
-            self.workouts.forEach { workout in
-                
-                // testing
-                workoutCollectionController.append(workout: workout)
-                
-                                
-                let workoutDateKey = sectionDateLabelAsSortKeyformatter.string(from: workout.startDate)
-                if((self.workoutsForDate[workoutDateKey]) != nil) {
-                    self.workoutsForDate[workoutDateKey]!.append(workout)
-                } else {
-                    self.workoutsForDate[workoutDateKey] = [workout]
-                    self.sectionDateKeyDictionary[workoutDateKey] = sectionDateLabelformatter.string(from: workout.startDate)
-                }
-            }
-            
-            workoutCollectionController.index()
-            
-            for (key, _) in self.workoutsForDate {
-                self.workoutDateKeysArray.append(key)
-            }
-            self.workoutDateKeysArray.sort(by: >)
+            workouts.forEach { workout in self.workoutCollectionController.append(workout: workout) }
+            self.workoutCollectionController.index()
             
             DispatchQueue.main.async(execute: { () -> Void in
                 self.tableView.reloadData()
@@ -116,46 +85,39 @@ class ListViewController: UIViewController {
 extension ListViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.workoutDateKeysArray.count
+        return self.workoutCollectionController.sectionItemCounts.count
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.sectionDateKeyDictionary[workoutDateKeysArray[section]]
+        return self.workoutCollectionController.sectionTitles[section]
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let workoutDate = self.workoutDateKeysArray[section]
-        return self.workoutsForDate[workoutDate]!.count
+        return self.workoutCollectionController.sectionItemCounts[section]
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        let workoutDate = self.workoutDateKeysArray[indexPath.section]
-        let workout = self.workoutsForDate[workoutDate]![indexPath.row]
-        let activityName = self.activityNames[workout.workoutActivityType.rawValue]?.ja ?? "(該当なし)"
-        let distance = String(format: "%@", workout.totalDistance ?? "")
-        cell.textLabel?.text = activityName + " " + distance
-        cell.textLabel?.textAlignment = .natural
+        let cellItem = self.workoutCollectionController.cellItems[indexPath.section][indexPath.row]
+        
+        let activityName = cellItem.activityName
+        let totalDistance = cellItem.totalDistance
+        let startLocationName = cellItem.startLocationName
+        cell.textLabel?.text = activityName + " " + startLocationName + " " + totalDistance
         return cell
     }
 }
 
 extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let workoutDate = self.workoutDateKeysArray[indexPath.section]
-        let workout = self.workoutsForDate[workoutDate]![indexPath.row]
-        self.performSegue(withIdentifier: "toDetail", sender: workout)
+        let cellItem = self.workoutCollectionController.cellItems[indexPath.section][indexPath.row]
+        self.performSegue(withIdentifier: "toDetail", sender: cellItem)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toDetail" {
             let destination = segue.destination as! DetailViewController
-            let workout = sender as? HKWorkout
-            destination.workout = workout
-            destination.workoutName = self.activityNames[workout!.workoutActivityType.rawValue]?.ja ?? "(種別不明)"
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "ydMMM", options: 0, locale: Locale(identifier: "ja_JP"))
-            destination.workoutStart = formatter.string(from: workout!.startDate)
+            let workoutController = sender as? WorkoutController
+            destination.workoutController = workoutController
         }
     }
 }
