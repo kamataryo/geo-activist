@@ -72,12 +72,18 @@ class ListViewController: UIViewController {
             
             let workouts = workouts! as! [HKWorkout]
             
-            workouts.forEach { workout in self.workoutCollectionController.append(workout: workout) }
-            self.workoutCollectionController.index()
+            let group = DispatchGroup()
             
-            DispatchQueue.main.async(execute: { () -> Void in
+            workouts.forEach { workout in
+                self.workoutCollectionController.append(workout: workout, group: group)
+            }
+            
+            self.workoutCollectionController.index()
+            print(0)
+            group.notify(queue: DispatchQueue.main) {
+                print(111)
                 self.tableView.reloadData()
-            });
+            }
         })
     }
 }

@@ -19,35 +19,39 @@ class WorkoutController {
     private var startLocation: CLLocation? = nil
     
     public var startDate: Date
-    public var activityName: String
-    public var totalDistance: String
-    public var startLocationName: String = ""
+    public var activityName: String = "(該当なし)"
+    public var totalDistance: String = "-- km"
+    public var startLocationName: String =  "(不明な場所)"
     
-    init(workout: HKWorkout) {
+    init(workout: HKWorkout, group: DispatchGroup) {
         self.workout = workout
-
+        
         self.startDate = workout.startDate
         self.activityName = WorkoutController.activityNameDictionary[workout.workoutActivityType.rawValue]?.ja ?? "(該当なし)"
         self.totalDistance = String(format: "%@", workout.totalDistance ?? "")
-
-        self.readWorkoutRoutes(workout: workout) { (results, error) in
-            let workoutRoutes = results as! [HKWorkoutRoute]
-            
-            if workoutRoutes.count > 0 {
-                let workoutRoute = workoutRoutes[0]
-                self.workoutRoute = workoutRoute
+        
+        let queue = DispatchQueue(label: "workout-item")
+        
+        group.enter()
+        queue.async(group: group) {
+            self.readWorkoutRoutes(workout: workout) { (results, error) in
+                let workoutRoutes = results as! [HKWorkoutRoute]
                 
-                self.readWorkoutStartLocation(workoutRoute: workoutRoute) { (result, error) in
-                    let startLocation = result as! CLLocation
-                    self.startLocation = startLocation
+                if workoutRoutes.count > 0 {
+                    let workoutRoute = workoutRoutes[0]
+                    self.workoutRoute = workoutRoute
                     
-                    self.readPlaceName(location: startLocation) { startLocationName in
-                        self.startLocationName = startLocationName
+                    self.readWorkoutStartLocation(workoutRoute: workoutRoute) { (result, error) in
+                        let startLocation = result as! CLLocation
+                        self.startLocation = startLocation
                         
-                        // TODO: how to notify if ready?
-//                        print(self.totalDistance)
-//                        print(startLocationName)
+                        self.readPlaceName(location: startLocation) { startLocationName in
+                            self.startLocationName = startLocationName
+                            group.leave()
+                        }
                     }
+                } else {
+                    group.leave()
                 }
             }
         }
@@ -70,10 +74,10 @@ class WorkoutController {
         }
         WorkoutController.healthKitStore.execute(sampleQuery)
     }
-        
+    
     private func readWorkoutStartLocation(workoutRoute: HKWorkoutRoute, _ completion: ((AnyObject?, NSError?) -> Void)!) {
         let routeQuery = HKWorkoutRouteQuery(route: workoutRoute) { query, locationsOrNil, done, errorOrNil in
-
+            
             if let error = errorOrNil {
                 print("Location query error")
                 return

@@ -75,12 +75,14 @@ The columns are:
 }
 ```
 
+```
 [
-0: {
-\_dateSectionSortKey: "20200101",
-dateSectionTitle: "2020 年 1 月 1 日",
-rowItems: [
+  0: {
+    _dateSectionSortKey: "20200101",
+    dateSectionTitle: "2020年1月1日",
+    rowItems: [
 
- ]
-}
+    ]
+  }
 ]
+```

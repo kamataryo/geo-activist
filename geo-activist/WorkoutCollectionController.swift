@@ -13,19 +13,21 @@ class WorkoutCollecitonController {
     private var workoutControllers: [WorkoutController] = []
     private var dateSectionTitleFormatter = DateFormatter()
     private var dateSectionSortKeyFormatter = DateFormatter()
-         
+    
+    public var dispatchGroup = DispatchGroup()
+    public var dispatchQueue = DispatchQueue(label: "healthkit", attributes: .concurrent) 
+    
     public var sectionTitles: [String] = []
     public var sectionItemCounts: [Int] = []
     public var cellItems: [[WorkoutController]] = []
     init() {
         dateSectionTitleFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "ydMMM", options: 0, locale: Locale(identifier: "ja_JP"))
-        
         dateSectionSortKeyFormatter.dateFormat = "yyyyMMdd"
         dateSectionSortKeyFormatter.timeZone = TimeZone.current
     }
         
-    public func append(workout: HKWorkout) {
-        self.workoutControllers.append(WorkoutController(workout: workout))
+    public func append(workout: HKWorkout, group: DispatchGroup) {
+        self.workoutControllers.append(WorkoutController(workout: workout, group: group))
     }
     
     public func index() {
