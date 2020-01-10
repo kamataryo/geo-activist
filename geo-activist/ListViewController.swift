@@ -84,6 +84,8 @@ class ListViewController: UIViewController {
             sectionDateLabelAsSortKeyformatter.timeZone = TimeZone.current
             
             self.workouts.forEach { workout in
+                let x = WorkoutController(workout: workout)
+                
                 let workoutDateKey = sectionDateLabelAsSortKeyformatter.string(from: workout.startDate)
                 if((self.workoutsForDate[workoutDateKey]) != nil) {
                     self.workoutsForDate[workoutDateKey]!.append(workout)

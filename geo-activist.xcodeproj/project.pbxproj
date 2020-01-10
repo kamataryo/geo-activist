@@ -17,6 +17,7 @@
 		819EBC2723C31427006C0E88 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 819EBC2623C31427006C0E88 /* HealthKit.framework */; };
 		819EBC2D23C3FA1A006C0E88 /* HKNameDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819EBC2C23C3FA1A006C0E88 /* HKNameDictionary.swift */; };
 		819EBC2F23C42D66006C0E88 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819EBC2E23C42D66006C0E88 /* DetailViewController.swift */; };
+		81DE792423C843F40011BF81 /* WorkoutsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DE792323C843F40011BF81 /* WorkoutsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		819EBC2623C31427006C0E88 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		819EBC2C23C3FA1A006C0E88 /* HKNameDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKNameDictionary.swift; sourceTree = "<group>"; };
 		819EBC2E23C42D66006C0E88 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		81DE792323C843F40011BF81 /* WorkoutsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 				819EBC0223C313EC006C0E88 /* AppDelegate.swift */,
 				819EBC0423C313EC006C0E88 /* SceneDelegate.swift */,
 				819EBC0623C313EC006C0E88 /* ListViewController.swift */,
+				81DE792323C843F40011BF81 /* WorkoutsController.swift */,
 				819EBC2E23C42D66006C0E88 /* DetailViewController.swift */,
 				819EBC0823C313EC006C0E88 /* Main.storyboard */,
 				819EBC0B23C313ED006C0E88 /* Assets.xcassets */,
@@ -223,6 +226,7 @@
 				819EBC0723C313EC006C0E88 /* ListViewController.swift in Sources */,
 				819EBC0323C313EC006C0E88 /* AppDelegate.swift in Sources */,
 				819EBC2F23C42D66006C0E88 /* DetailViewController.swift in Sources */,
+				81DE792423C843F40011BF81 /* WorkoutsController.swift in Sources */,
 				819EBC0523C313EC006C0E88 /* SceneDelegate.swift in Sources */,
 				819EBC2D23C3FA1A006C0E88 /* HKNameDictionary.swift in Sources */,
 			);
