@@ -12,9 +12,12 @@ import HealthKit
 
 class ListViewController: UIViewController {
     
-    // Views
-    private let tableView = UITableView()
+    var _count = 0
     
+    // Views
+    private let tableView = UITableView(frame: CGRect(), style: .grouped)
+    private let refreshControl = UIRefreshControl()
+
     // HealthKit
     private let healthKitStore: HKHealthStore = HKHealthStore()
     private var workoutCollectionController = WorkoutCollecitonController()
@@ -31,6 +34,9 @@ class ListViewController: UIViewController {
         self.tableView.dataSource = self
         view.addSubview(tableView)
         self.tableView.delegate = self
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.pullToRefresh(_:)), for: .valueChanged)
+        self.tableView.addSubview(refreshControl)
         
         self.healthKitStore.requestAuthorization(toShare: nil, read: self.readDataTypes) {
             (success, error) -> Void in
@@ -41,7 +47,7 @@ class ListViewController: UIViewController {
                     self.present(alert, animated: true)
                 })
             } else {
-                self.refresh()
+                self.refresh(pulled: false)
             }
         }
     }
@@ -63,7 +69,11 @@ class ListViewController: UIViewController {
         self.healthKitStore.execute(sampleQuery)
     }
     
-    func refresh() {
+    @objc func pullToRefresh(_ sender: Any) {
+        self.workoutCollectionController.clear()
+        self.refresh(pulled: true)
+    }
+    func refresh(pulled: Bool) {
         self.readWorkouts({ (workouts, error) -> Void in
             if( error != nil ) {
                 print("Error reading workouts")
@@ -85,10 +95,14 @@ class ListViewController: UIViewController {
             
             group.notify(queue: .main) {
                 print("notified")
+                if pulled {
+                    self.refreshControl.endRefreshing()
+                }
                 self.workoutCollectionController.index()
                 self.tableView.reloadData()
             }
         })
+        
     }
 }
 
