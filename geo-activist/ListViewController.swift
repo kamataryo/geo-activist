@@ -34,7 +34,9 @@ class ListViewController: UIViewController {
         self.tableView.dataSource = self
         view.addSubview(tableView)
         self.tableView.delegate = self
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        
+        // pull to refresh
+        refreshControl.attributedTitle = NSAttributedString(string: "下にスワイプして更新")
         refreshControl.addTarget(self, action: #selector(self.pullToRefresh(_:)), for: .valueChanged)
         self.tableView.addSubview(refreshControl)
         
@@ -88,13 +90,11 @@ class ListViewController: UIViewController {
             for workout in workouts {
                 group.enter()
                 queue.async(group: group) {
-                    print("a")
                     self.workoutCollectionController.append(workout: workout, done: group.leave)
                 }
             }
             
             group.notify(queue: .main) {
-                print("notified")
                 if pulled {
                     self.refreshControl.endRefreshing()
                 }

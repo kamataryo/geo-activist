@@ -10,18 +10,24 @@ import Foundation
 import HealthKit
 import CoreLocation
 
+enum LocationExportType {
+    case csv
+}
+
 class WorkoutController {
     static let healthKitStore = HKHealthStore()
     static let activityNameDictionary = HKNameDictionary.get()
     
     private let workout: HKWorkout
-    private var workoutRoute: HKWorkoutRoute? = nil
     private var startLocation: CLLocation? = nil
     
     public var startDate: Date
     public var activityName: String = "(該当なし)"
     public var totalDistance: String = "-- km"
     public var startLocationName: String =  "(不明な場所)"
+    
+    public var workoutRoute: HKWorkoutRoute? = nil
+    
     
     init(workout: HKWorkout) {
         self.workout = workout
@@ -104,5 +110,38 @@ class WorkoutController {
                 completion(startPlaceName)
             }
         }
+    }
+    
+    public func getAllLocations(type: LocationExportType, completion: @escaping (_ allLocations: String) -> Void) {
+        
+        var allLocations: String = "timestamp,latitude,longitude,altitude\n"
+        
+        let routeQuery = HKWorkoutRouteQuery(route: self.workoutRoute!) { query, locationsOrNil, done, errorOrNil in
+            
+            if let error = errorOrNil {
+                completion("")
+                // Handle any errors here.
+                return
+            }
+            
+            guard let locations = locationsOrNil else {
+                fatalError("*** Invalid State: This can only fail if there was an error. ***")
+            }
+            
+            // Do something with this batch of location data.
+            
+            locations.forEach { element in
+                allLocations += String(element.timestamp.timeIntervalSince1970) + ","
+                allLocations += String(element.coordinate.latitude) + ","
+                allLocations += String(element.coordinate.longitude) + ","
+                allLocations += String(element.altitude) + "\n"
+            }
+            
+            if done {
+                completion(allLocations)
+            }
+        }
+        
+        WorkoutController.healthKitStore.execute(routeQuery)
     }
 }
