@@ -10,6 +10,7 @@ import UIKit
 import HealthKit
 import CoreLocation
 import Social
+import Mapbox
 
 class DetailViewController: UIViewController {
     
@@ -25,6 +26,13 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let styleURL = URL(string: "https://raw.githubusercontent.com/geolonia/styles.geolonia.com/master/geolonia-basic/style.json")
+
+        let mapView = MGLMapView(frame: view.bounds, styleURL: styleURL)
+        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+        view.addSubview(mapView)
+
         //        self.dateLabel?.text = self.workoutController!.startDate
         //        self.workoutNameLabel?.text = self.workoutController!.activityName
         //        self.distanceLabel?.text = String(format: "%@", workout?.totalDistance ?? "データなし")

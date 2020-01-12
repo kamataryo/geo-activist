@@ -2,6 +2,6 @@
   "name": "GeoActivist",
   "description": "Apple Watch Activity GPS Data Extractor.",
   "scripts": {
-    "xcode": "open ./geo-activist.xcodeproj"
+    "xcode": "open ./geo-activist.xcworkspace"
   }
 }

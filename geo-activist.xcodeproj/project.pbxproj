@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8128889323CB1736007E42FF /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8128889223CB1736007E42FF /* Settings.bundle */; };
 		819EBC0323C313EC006C0E88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819EBC0223C313EC006C0E88 /* AppDelegate.swift */; };
 		819EBC0523C313EC006C0E88 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819EBC0423C313EC006C0E88 /* SceneDelegate.swift */; };
 		819EBC0723C313EC006C0E88 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819EBC0623C313EC006C0E88 /* ListViewController.swift */; };
@@ -19,6 +20,8 @@
 		819EBC2F23C42D66006C0E88 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819EBC2E23C42D66006C0E88 /* DetailViewController.swift */; };
 		81DE792423C843F40011BF81 /* WorkoutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DE792323C843F40011BF81 /* WorkoutController.swift */; };
 		81DE792623C866420011BF81 /* WorkoutCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DE792523C866420011BF81 /* WorkoutCollectionController.swift */; };
+		B17CC5C9971C9A703232BE69 /* Pods_geo_activist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 938CD19517B8979ABD83D88F /* Pods_geo_activist.framework */; };
+		F081F2BDCFB5F05788062A8A /* Pods_geo_activistTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 728A5185FF710A48AF6F1204 /* Pods_geo_activistTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +35,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07584FFEA395F3C70FDF9B3C /* Pods-geo-activist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-geo-activist.release.xcconfig"; path = "Target Support Files/Pods-geo-activist/Pods-geo-activist.release.xcconfig"; sourceTree = "<group>"; };
+		2C82E969735DFCFBD9CE1F62 /* Pods-geo-activist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-geo-activist.debug.xcconfig"; path = "Target Support Files/Pods-geo-activist/Pods-geo-activist.debug.xcconfig"; sourceTree = "<group>"; };
+		3947EB0E5E67A50AFACD9EFA /* Pods-geo-activistTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-geo-activistTests.debug.xcconfig"; path = "Target Support Files/Pods-geo-activistTests/Pods-geo-activistTests.debug.xcconfig"; sourceTree = "<group>"; };
+		728A5185FF710A48AF6F1204 /* Pods_geo_activistTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_geo_activistTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7864E7AD1E1F0BAD8BD1A912 /* Pods-geo-activistTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-geo-activistTests.release.xcconfig"; path = "Target Support Files/Pods-geo-activistTests/Pods-geo-activistTests.release.xcconfig"; sourceTree = "<group>"; };
+		8128889223CB1736007E42FF /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		819EBBFF23C313EC006C0E88 /* GeoActivist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeoActivist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		819EBC0223C313EC006C0E88 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		819EBC0423C313EC006C0E88 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +58,7 @@
 		819EBC2E23C42D66006C0E88 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		81DE792323C843F40011BF81 /* WorkoutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutController.swift; sourceTree = "<group>"; };
 		81DE792523C866420011BF81 /* WorkoutCollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCollectionController.swift; sourceTree = "<group>"; };
+		938CD19517B8979ABD83D88F /* Pods_geo_activist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_geo_activist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +67,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				819EBC2723C31427006C0E88 /* HealthKit.framework in Frameworks */,
+				B17CC5C9971C9A703232BE69 /* Pods_geo_activist.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,12 +75,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F081F2BDCFB5F05788062A8A /* Pods_geo_activistTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		018CED038354D51357033CD3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2C82E969735DFCFBD9CE1F62 /* Pods-geo-activist.debug.xcconfig */,
+				07584FFEA395F3C70FDF9B3C /* Pods-geo-activist.release.xcconfig */,
+				3947EB0E5E67A50AFACD9EFA /* Pods-geo-activistTests.debug.xcconfig */,
+				7864E7AD1E1F0BAD8BD1A912 /* Pods-geo-activistTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		819EBBF623C313EC006C0E88 = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +100,7 @@
 				819EBC1823C313ED006C0E88 /* geo-activistTests */,
 				819EBC0023C313EC006C0E88 /* Products */,
 				819EBC2523C31427006C0E88 /* Frameworks */,
+				018CED038354D51357033CD3 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,6 +123,7 @@
 				81DE792323C843F40011BF81 /* WorkoutController.swift */,
 				81DE792523C866420011BF81 /* WorkoutCollectionController.swift */,
 				819EBC2E23C42D66006C0E88 /* DetailViewController.swift */,
+				8128889223CB1736007E42FF /* Settings.bundle */,
 				819EBC0823C313EC006C0E88 /* Main.storyboard */,
 				819EBC0B23C313ED006C0E88 /* Assets.xcassets */,
 				819EBC0D23C313ED006C0E88 /* LaunchScreen.storyboard */,
@@ -121,6 +146,8 @@
 			isa = PBXGroup;
 			children = (
 				819EBC2623C31427006C0E88 /* HealthKit.framework */,
+				938CD19517B8979ABD83D88F /* Pods_geo_activist.framework */,
+				728A5185FF710A48AF6F1204 /* Pods_geo_activistTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -132,9 +159,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 819EBC1E23C313ED006C0E88 /* Build configuration list for PBXNativeTarget "geo-activist" */;
 			buildPhases = (
+				9EED7D3813B6EEAB8947CD3A /* [CP] Check Pods Manifest.lock */,
 				819EBBFB23C313EC006C0E88 /* Sources */,
 				819EBBFC23C313EC006C0E88 /* Frameworks */,
 				819EBBFD23C313EC006C0E88 /* Resources */,
+				347E79D75F08939B9A809B95 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -149,6 +178,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 819EBC2123C313ED006C0E88 /* Build configuration list for PBXNativeTarget "geo-activistTests" */;
 			buildPhases = (
+				28B1009D2EBABC7CED48A621 /* [CP] Check Pods Manifest.lock */,
 				819EBC1123C313ED006C0E88 /* Sources */,
 				819EBC1223C313ED006C0E88 /* Frameworks */,
 				819EBC1323C313ED006C0E88 /* Resources */,
@@ -206,6 +236,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8128889323CB1736007E42FF /* Settings.bundle in Resources */,
 				819EBC0F23C313ED006C0E88 /* LaunchScreen.storyboard in Resources */,
 				819EBC0C23C313ED006C0E88 /* Assets.xcassets in Resources */,
 				819EBC0A23C313EC006C0E88 /* Main.storyboard in Resources */,
@@ -220,6 +251,70 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		28B1009D2EBABC7CED48A621 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-geo-activistTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		347E79D75F08939B9A809B95 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-geo-activist/Pods-geo-activist-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-geo-activist/Pods-geo-activist-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-geo-activist/Pods-geo-activist-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9EED7D3813B6EEAB8947CD3A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-geo-activist-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		819EBBFB23C313EC006C0E88 /* Sources */ = {
@@ -390,6 +485,7 @@
 		};
 		819EBC1F23C313ED006C0E88 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C82E969735DFCFBD9CE1F62 /* Pods-geo-activist.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "geo-activist/geo-activist.entitlements";
@@ -409,6 +505,7 @@
 		};
 		819EBC2023C313ED006C0E88 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 07584FFEA395F3C70FDF9B3C /* Pods-geo-activist.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "geo-activist/geo-activist.entitlements";
@@ -428,6 +525,7 @@
 		};
 		819EBC2223C313ED006C0E88 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3947EB0E5E67A50AFACD9EFA /* Pods-geo-activistTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -450,6 +548,7 @@
 		};
 		819EBC2323C313ED006C0E88 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7864E7AD1E1F0BAD8BD1A912 /* Pods-geo-activistTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
