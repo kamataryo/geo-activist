@@ -23,36 +23,30 @@ class WorkoutController {
     public var totalDistance: String = "-- km"
     public var startLocationName: String =  "(不明な場所)"
     
-    init(workout: HKWorkout, group: DispatchGroup) {
+    init(workout: HKWorkout) {
         self.workout = workout
         
         self.startDate = workout.startDate
         self.activityName = WorkoutController.activityNameDictionary[workout.workoutActivityType.rawValue]?.ja ?? "(該当なし)"
         self.totalDistance = String(format: "%@", workout.totalDistance ?? "")
-        
-        let queue = DispatchQueue(label: "workout-item")
-        
-        group.enter()
-        queue.async(group: group) {
-            self.readWorkoutRoutes(workout: workout) { (results, error) in
-                let workoutRoutes = results as! [HKWorkoutRoute]
-                
-                if workoutRoutes.count > 0 {
-                    let workoutRoute = workoutRoutes[0]
-                    self.workoutRoute = workoutRoute
-                    
-                    self.readWorkoutStartLocation(workoutRoute: workoutRoute) { (result, error) in
-                        let startLocation = result as! CLLocation
-                        self.startLocation = startLocation
-                        
-                        self.readPlaceName(location: startLocation) { startLocationName in
-                            self.startLocationName = startLocationName
-                            group.leave()
-                        }
+    }
+    
+    public func query(done: @escaping () -> Void) {
+        self.readWorkoutRoutes(workout: workout) { (results, error) in
+            let workoutRoutes = results as! [HKWorkoutRoute]
+            if workoutRoutes.count > 0 {
+                let workoutRoute = workoutRoutes[0]
+                self.workoutRoute = workoutRoute
+                self.readWorkoutStartLocation(workoutRoute: workoutRoute) { (result, error) in
+                    let startLocation = result as! CLLocation
+                    self.startLocation = startLocation
+                    self.readPlaceName(location: startLocation) { startLocationName in
+                        self.startLocationName = startLocationName
+                        done()
                     }
-                } else {
-                    group.leave()
                 }
+            } else {
+                done()
             }
         }
     }
@@ -91,20 +85,24 @@ class WorkoutController {
         WorkoutController.healthKitStore.execute(routeQuery)
     }
     
-    private func readPlaceName(location: CLLocation, _ compeltion: ((String) -> Void)!) {
+    private func readPlaceName(location: CLLocation, _ completion: ((String) -> Void)!) {
         CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
-            guard let placemark = placemarks?.first, error == nil else { return }
-            let elements = ([
-                placemark.locality ?? "",
-                placemark.subLocality ?? ""
-            ]).filter { element in
-                return element != "" && element != nil
+            if placemarks == nil {
+                completion("(不明な場所)")
+            } else {
+                let placemark = placemarks!.first
+                let elements = ([
+                    placemark?.locality ?? "",
+                    placemark?.subLocality ?? ""
+                ]).filter { element in
+                    return element != "" && element != nil
+                }
+                var startPlaceName = elements.joined(separator: ", ")
+                if startPlaceName == "" {
+                    startPlaceName = "(不明な場所)"
+                }
+                completion(startPlaceName)
             }
-            var startPlaceName = elements.joined(separator: ", ")
-            if startPlaceName == "" {
-                startPlaceName = "(不明な場所)"
-            }
-            compeltion(startPlaceName)
         }
     }
 }

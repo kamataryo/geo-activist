@@ -26,8 +26,10 @@ class WorkoutCollecitonController {
         dateSectionSortKeyFormatter.timeZone = TimeZone.current
     }
         
-    public func append(workout: HKWorkout, group: DispatchGroup) {
-        self.workoutControllers.append(WorkoutController(workout: workout, group: group))
+    public func append(workout: HKWorkout, done: @escaping () -> Void) {
+        let workoutController = WorkoutController(workout: workout)
+        self.workoutControllers.append(workoutController)
+        workoutController.query(done: done)
     }
     
     public func index() {
