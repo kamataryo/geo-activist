@@ -22,8 +22,10 @@ class WorkoutController {
     private var startLocation: CLLocation? = nil
     
     public var startDate: Date
+    public var dateLabel: String = ""
     public var activityName: String = "(該当なし)"
     public var totalDistance: String = "-- km"
+    public var totalEnergyBurned: String = "-- kcal"
     public var startLocationName: String =  "(不明な場所)"
     
     public var workoutRoute: HKWorkoutRoute? = nil
@@ -34,7 +36,8 @@ class WorkoutController {
         
         self.startDate = workout.startDate
         self.activityName = WorkoutController.activityNameDictionary[workout.workoutActivityType.rawValue]?.ja ?? "(該当なし)"
-        self.totalDistance = String(format: "%@", workout.totalDistance ?? "")
+        self.totalDistance = String(format: "%@", workout.totalDistance ?? "データなし")
+        self.totalEnergyBurned = String(format: "%@", workout.totalEnergyBurned ?? "データなし")
     }
     
     public func query(done: @escaping () -> Void) {

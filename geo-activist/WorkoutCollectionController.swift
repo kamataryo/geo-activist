@@ -38,9 +38,11 @@ class WorkoutCollecitonController {
         
         self.workoutControllers.forEach { workoutController in
             let dateSectionSortKey = dateSectionSortKeyFormatter.string(from: workoutController.startDate)
+            let dateLabel = dateSectionTitleFormatter.string(from: workoutController.startDate)
+            workoutController.dateLabel = dateLabel
             if dateGroups[dateSectionSortKey] == nil {
                 dateGroups[dateSectionSortKey] = [workoutController]
-                sectionTitleMap[dateSectionSortKey] = dateSectionTitleFormatter.string(from: workoutController.startDate)
+                sectionTitleMap[dateSectionSortKey] = dateLabel
             } else {
                 dateGroups[dateSectionSortKey]!.append(workoutController)
             }

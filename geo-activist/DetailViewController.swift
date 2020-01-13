@@ -10,39 +10,22 @@ import UIKit
 import HealthKit
 import CoreLocation
 import Social
-import Mapbox
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController,UITableViewDataSource, UITableViewDelegate {
     
     var workoutController: WorkoutController? = nil
     private let healthKitStore: HKHealthStore = HKHealthStore()
     
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var workoutNameLabel: UILabel!
-    @IBOutlet weak var distanceLabel: UILabel!
-    @IBOutlet weak var energyBurnLabel: UILabel!
     @IBOutlet weak var exportButton: UIButton!
-    
+    @IBOutlet weak var descriptionTableView: UITableView!
+    @IBOutlet weak var mapView: UIView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let styleURL = URL(string: "https://raw.githubusercontent.com/geolonia/styles.geolonia.com/master/geolonia-basic/style.json")
-
-        let mapView = MGLMapView(frame: view.bounds, styleURL: styleURL)
-        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
-        view.addSubview(mapView)
-
-        //        self.dateLabel?.text = self.workoutController!.startDate
-        //        self.workoutNameLabel?.text = self.workoutController!.activityName
-        //        self.distanceLabel?.text = String(format: "%@", workout?.totalDistance ?? "データなし")
-        //        self.energyBurnLabel?.text = String(format: "%@", workout?.totalEnergyBurned ?? "データなし")
-        
         self.exportButton.addTarget(self, action: #selector(self.buttonEvent), for: .touchUpInside)
     }
     
     @objc func buttonEvent() {
-        
         if(self.workoutController!.workoutRoute == nil) {
             DispatchQueue.main.async(execute: { () -> Void in
                 let alert = UIAlertController(title: "ルートが見つかりませんでした", message: "このワークアウトではルートが記録されていないようです。", preferredStyle: .alert)
@@ -58,5 +41,54 @@ class DetailViewController: UIViewController {
                 });
             })
         }
+    }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 4
+    }
+        
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "日付"
+        case 1:
+            return "アクティビティ"
+        case 2:
+            return "距離"
+        case 3:
+            return "消費カロリー"
+        default:
+            return ""
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        switch indexPath.section {
+        case 0:
+            cell.textLabel?.text = self.workoutController!.dateLabel
+        case 1:
+            cell.textLabel?.text = self.workoutController!.activityName
+        case 2:
+            cell.textLabel?.text = self.workoutController!.totalDistance
+        case 3:
+            cell.textLabel?.text = self.workoutController!.totalEnergyBurned
+        default:
+            cell.textLabel?.text = ""
+        }
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if(section == 0) {
+            return 24.0
+        } else {
+            return 10.0
+        }
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 40.0
     }
 }
