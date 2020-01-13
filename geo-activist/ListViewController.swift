@@ -17,7 +17,7 @@ class ListViewController: UIViewController {
     // Views
     private let tableView = UITableView(frame: CGRect(), style: .grouped)
     private let refreshControl = UIRefreshControl()
-
+    
     // HealthKit
     private let healthKitStore: HKHealthStore = HKHealthStore()
     private var workoutCollectionController = WorkoutCollecitonController()
@@ -26,29 +26,40 @@ class ListViewController: UIViewController {
         HKSeriesType.workoutRoute(),
         HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.distanceWalkingRunning)!,
     ]
+    private var initialyLoaded = false
+    
+    private var noItems: Bool {
+        return self.initialyLoaded && self.workoutCollectionController.sectionItemCounts.count == 0
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.frame = view.bounds
-        self.tableView.dataSource = self
-        view.addSubview(tableView)
-        self.tableView.delegate = self
-        
-        // pull to refresh
-        refreshControl.attributedTitle = NSAttributedString(string: "下にスワイプして更新")
-        refreshControl.addTarget(self, action: #selector(self.pullToRefresh(_:)), for: .valueChanged)
-        self.tableView.addSubview(refreshControl)
-        
-        self.healthKitStore.requestAuthorization(toShare: nil, read: self.readDataTypes) {
-            (success, error) -> Void in
-            if (success == false) {
-                DispatchQueue.main.async(execute: { () -> Void in
-                    let alert = UIAlertController(title: "ワークアウトへのアクセス権限が必要です", message: "設定 -> ヘルスケア -> データアクセスとデバイスから、GeoActivist にワークアウトのデータを読み出す権限を与えて下さい。", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                    self.present(alert, animated: true)
+        // availability and Authorization
+        if (!HKHealthStore.isHealthDataAvailable()) {
+            DispatchQueue.main.async(execute: { () -> Void in
+                let alert = UIAlertController(title: "アプリを利用できません", message: "このデバイスではヘルスケアの機能が利用できないようです。", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self.present(alert, animated: true)
+            })
+        } else {
+            self.healthKitStore.requestAuthorization(toShare: nil, read: self.readDataTypes) {
+                (success, error) -> Void in
+                
+                DispatchQueue.main.sync(execute: { () -> Void in
+                    // views
+                    self.tableView.frame = self.view.bounds
+                    self.tableView.dataSource = self
+                    self.view.addSubview(self.tableView)
+                    self.tableView.delegate = self
+                    
+                    // pull to refresh
+                    self.refreshControl.attributedTitle = NSAttributedString(string: "下にスワイプして更新")
+                    self.refreshControl.addTarget(self, action: #selector(self.pullToRefresh(_:)), for: .valueChanged)
+                    self.tableView.addSubview(self.refreshControl)
                 })
-            } else {
+                
+                // Ready!
                 self.refresh(pulled: false)
             }
         }
@@ -95,46 +106,71 @@ class ListViewController: UIViewController {
             }
             
             group.notify(queue: .main) {
-                if pulled {
-                    self.refreshControl.endRefreshing()
-                }
                 self.workoutCollectionController.index()
+                self.initialyLoaded = true
                 self.tableView.reloadData()
+                self.refreshControl.endRefreshing()
             }
         })
-        
     }
 }
 
 extension ListViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.workoutCollectionController.sectionItemCounts.count
+        if(self.noItems) {
+            return 1
+        } else {
+            return self.workoutCollectionController.sectionItemCounts.count
+        }
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.workoutCollectionController.sectionTitles[section]
+        if(self.noItems) {
+            return "ワークアウトがありません"
+        } else {
+            return self.workoutCollectionController.sectionTitles[section]
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.workoutCollectionController.sectionItemCounts[section]
+        if(self.noItems) {
+            return 0
+        } else {
+            return self.workoutCollectionController.sectionItemCounts[section]
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        let cellItem = self.workoutCollectionController.cellItems[indexPath.section][indexPath.row]
-        
-        let activityName = cellItem.activityName
-        let totalDistance = cellItem.totalDistance
-        let startLocationName = cellItem.startLocationName
-        cell.textLabel?.text = activityName + " " + startLocationName + " " + totalDistance
-        return cell
+        if(self.noItems) {
+            return cell
+        } else {
+            let cellItem = self.workoutCollectionController.cellItems[indexPath.section][indexPath.row]
+            
+            let activityName = cellItem.activityName
+            let totalDistance = cellItem.totalDistance
+            let startLocationName = cellItem.startLocationName
+            cell.textLabel?.text = activityName + " " + startLocationName + " " + totalDistance
+            return cell
+        }
+    }
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if(self.noItems) {
+            let footerView = UITextView()
+            footerView.text = "ワークアウトが記録されていないか、権限がありません。設定 -> ヘルスケア -> データアクセスとデバイス からワークアウトのデータを読み出す権限をアプリに与えることができます。" + "\n\n" + "ワークアウトを新しく記録した後や、権限を変更した際はこの画面を下にスワイプするとデータを更新できます。"
+            return footerView
+        } else {
+            return nil
+        }
     }
 }
 
 extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cellItem = self.workoutCollectionController.cellItems[indexPath.section][indexPath.row]
-        self.performSegue(withIdentifier: "toDetail", sender: cellItem)
+        if(!self.noItems) {
+            let cellItem = self.workoutCollectionController.cellItems[indexPath.section][indexPath.row]
+            self.performSegue(withIdentifier: "toDetail", sender: cellItem)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
