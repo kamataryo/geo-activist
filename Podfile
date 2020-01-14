@@ -6,7 +6,7 @@ target 'geo-activist' do
   use_frameworks!
 
   # Pods for geo-activist
-  pod 'Mapbox-iOS-SDK', '~> 5.6'
+  pod 'Turf', '~> 0.3'
 
   target 'geo-activistTests' do
     inherit! :search_paths

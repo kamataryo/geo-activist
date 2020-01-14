@@ -9,9 +9,11 @@
 import Foundation
 import HealthKit
 import CoreLocation
+import MapKit
 
 enum LocationExportType {
     case csv
+    case geoJSON
 }
 
 class WorkoutController {
@@ -30,6 +32,9 @@ class WorkoutController {
     
     public var workoutRoute: HKWorkoutRoute? = nil
     
+    public var csv = ""
+    public var geoJSON = ""
+    public var polyline = MKPolyline()
     
     init(workout: HKWorkout) {
         self.workout = workout
@@ -115,9 +120,20 @@ class WorkoutController {
         }
     }
     
-    public func getAllLocations(type: LocationExportType, completion: @escaping (_ allLocations: String) -> Void) {
+    public func getAllLocations(locationExportType: LocationExportType, completion: @escaping (_ allLocations: String) -> Void) {
         
-        var allLocations: String = "timestamp,latitude,longitude,altitude\n"
+        
+        self.csv = "timestamp,latitude,longitude,altitude\n"
+        self.geoJSON = "{\n"
+        self.geoJSON += "\"type\":\"FeatureCollection\","
+        self.geoJSON += "\"features\":["
+        self.geoJSON += "{"
+        self.geoJSON += "\"type\": \"Feature\","
+        self.geoJSON += "\"geometry\":{"
+        self.geoJSON += "\"type\": \"LineString\","
+        self.geoJSON += "\"coordinates\":["
+        self.polyline = MKPolyline()
+        var coordinates: [CLLocationCoordinate2D] = []
         
         let routeQuery = HKWorkoutRouteQuery(route: self.workoutRoute!) { query, locationsOrNil, done, errorOrNil in
             
@@ -131,17 +147,39 @@ class WorkoutController {
                 fatalError("*** Invalid State: This can only fail if there was an error. ***")
             }
             
-            // Do something with this batch of location data.
-            
             locations.forEach { element in
-                allLocations += String(element.timestamp.timeIntervalSince1970) + ","
-                allLocations += String(element.coordinate.latitude) + ","
-                allLocations += String(element.coordinate.longitude) + ","
-                allLocations += String(element.altitude) + "\n"
+                let timestamp = String(element.timestamp.timeIntervalSince1970)
+                let latitude = String(element.coordinate.latitude)
+                let longitude = String(element.coordinate.longitude)
+                let altitude = String(element.altitude)
+                
+                self.csv += timestamp + ","
+                self.csv += latitude + ","
+                self.csv += longitude + ","
+                self.csv += altitude + "\n"
+                
+                self.geoJSON += "[" + longitude + "," + latitude + "],"
+                
+                coordinates.append(element.coordinate)
             }
             
             if done {
-                completion(allLocations)
+                self.geoJSON.removeLast(1)
+                self.geoJSON += "]"
+                self.geoJSON += "}"
+                self.geoJSON += "}"
+                self.geoJSON += "]"
+                self.geoJSON += "}"
+                
+                self.polyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
+
+                if(locationExportType == .csv) {
+                    completion(self.csv)
+                } else if(locationExportType == .geoJSON) {
+                    completion(self.geoJSON)
+                } else {
+                    completion("")
+                }
             }
         }
         
