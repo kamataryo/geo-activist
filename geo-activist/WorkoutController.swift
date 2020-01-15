@@ -34,11 +34,12 @@ class WorkoutController {
     
     public var csv = ""
     public var geoJSON = ""
+    public var csvFilePath: String? = nil
+    public var geoJSONFilePath: String? = nil
     public var polyline = MKPolyline()
     
     init(workout: HKWorkout) {
         self.workout = workout
-        
         self.startDate = workout.startDate
         self.activityName = WorkoutController.activityNameDictionary[workout.workoutActivityType.rawValue]?.ja ?? "(該当なし)"
         self.totalDistance = String(format: "%@", workout.totalDistance ?? "データなし")
@@ -120,7 +121,7 @@ class WorkoutController {
         }
     }
     
-    public func getAllLocations(locationExportType: LocationExportType, completion: @escaping (_ allLocations: String) -> Void) {
+    public func getAllLocations(locationExportType: LocationExportType, completion: @escaping (_ allLocations: String, _ filePath: String?) -> Void) {
         
         
         self.csv = "timestamp,latitude,longitude,altitude\n"
@@ -138,7 +139,7 @@ class WorkoutController {
         let routeQuery = HKWorkoutRouteQuery(route: self.workoutRoute!) { query, locationsOrNil, done, errorOrNil in
             
             if let error = errorOrNil {
-                completion("")
+                completion("", nil)
                 // Handle any errors here.
                 return
             }
@@ -172,13 +173,31 @@ class WorkoutController {
                 self.geoJSON += "}"
                 
                 self.polyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
-
+                
+                
+                let fileBaseName = NSTemporaryDirectory() + self.dateLabel + "-" + self.activityName
+                let csvFilePath = fileBaseName + ".csv"
+                let geoJsonFilePath = fileBaseName + ".geojson"
+                
+                do {
+                    try self.csv.write(toFile: csvFilePath, atomically: true, encoding: String.Encoding.utf8)
+                    self.csvFilePath = csvFilePath
+                } catch {
+                    print("failed to write csv file")
+                }
+                do {
+                    try self.geoJSON.write(toFile: geoJsonFilePath, atomically: true, encoding: String.Encoding.utf8)
+                    self.geoJSONFilePath = geoJsonFilePath
+                } catch {
+                    print("failed to write geoJSON file")
+                }
+                
                 if(locationExportType == .csv) {
-                    completion(self.csv)
+                    completion(self.csv, self.csvFilePath)
                 } else if(locationExportType == .geoJSON) {
-                    completion(self.geoJSON)
+                    completion(self.geoJSON, self.geoJSONFilePath)
                 } else {
-                    completion("")
+                    completion("", nil)
                 }
             }
         }
