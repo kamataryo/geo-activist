@@ -142,7 +142,8 @@ extension ListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+
         if(self.noItems) {
             return cell
         } else {
@@ -150,8 +151,9 @@ extension ListViewController: UITableViewDataSource {
             
             let activityName = cellItem.activityName
             let totalDistance = cellItem.totalDistance
-            let startLocationName = cellItem.startLocationName
-            cell.textLabel?.text = activityName + " " + startLocationName + " " + totalDistance
+//            let startLocationName = cellItem.startLocationName
+            cell.textLabel?.text = activityName
+            cell.detailTextLabel?.text = totalDistance
             return cell
         }
     }
