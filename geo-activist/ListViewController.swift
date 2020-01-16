@@ -106,6 +106,7 @@ class ListViewController: UIViewController {
             }
             
             group.notify(queue: .main) {
+                print("notify")
                 self.workoutCollectionController.index()
                 self.initialyLoaded = true
                 self.tableView.reloadData()

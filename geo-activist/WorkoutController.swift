@@ -55,10 +55,13 @@ class WorkoutController {
                 self.readWorkoutStartLocation(workoutRoute: workoutRoute) { (result, error) in
                     let startLocation = result as! CLLocation
                     self.startLocation = startLocation
-                    self.readPlaceName(location: startLocation) { startLocationName in
-                        self.startLocationName = startLocationName
-                        done()
-                    }
+                    
+                    done()
+                    // geoCoording should be once a minute ٩(๑❛ᴗ❛๑)۶
+//                    self.readPlaceName(location: startLocation) { startLocationName in
+//                        self.startLocationName = startLocationName
+//                        done()
+//                    }
                 }
             } else {
                 done()
