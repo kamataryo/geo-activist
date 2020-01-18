@@ -17,6 +17,7 @@ class ListViewController: UIViewController {
     // Views
     private let tableView = UITableView(frame: CGRect(), style: .grouped)
     private let refreshControl = UIRefreshControl()
+    private var spinnerView: UIView? = nil
     
     // HealthKit
     private let healthKitStore: HKHealthStore = HKHealthStore()
@@ -65,6 +66,28 @@ class ListViewController: UIViewController {
         }
     }
     
+    private func showSpinner(onView : UIView) {
+        let spinnerView = UIView(frame: onView.bounds)
+        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let activeIndicator = UIActivityIndicatorView.init(style: .whiteLarge)
+        activeIndicator.startAnimating()
+        activeIndicator.center = spinnerView.center
+        
+        DispatchQueue.main.async {
+            spinnerView.addSubview(activeIndicator)
+            onView.addSubview(spinnerView)
+        }
+        
+        self.spinnerView = spinnerView
+    }
+    
+    private func removeSpinner() {
+        DispatchQueue.main.async {
+            self.spinnerView?.removeFromSuperview()
+            self.spinnerView = nil
+        }
+    }
+    
     private func readWorkouts(_ completion: (([AnyObject]?, NSError?) -> Void)!) {
         let sortDescriptor = NSSortDescriptor(key:HKSampleSortIdentifierStartDate, ascending: false)
         let sampleQuery = HKSampleQuery(
@@ -87,6 +110,13 @@ class ListViewController: UIViewController {
         self.refresh(pulled: true)
     }
     func refresh(pulled: Bool) {
+        
+        if (!pulled) {
+            DispatchQueue.main.async {
+                self.showSpinner(onView: self.view)
+            }
+        }
+        
         self.readWorkouts({ (workouts, error) -> Void in
             if( error != nil ) {
                 print("Error reading workouts")
@@ -106,11 +136,13 @@ class ListViewController: UIViewController {
             }
             
             group.notify(queue: .main) {
-                print("notify")
                 self.workoutCollectionController.index()
                 self.initialyLoaded = true
                 self.tableView.reloadData()
                 self.refreshControl.endRefreshing()
+                if (!pulled) {
+                    self.removeSpinner()
+                }
             }
         })
     }
