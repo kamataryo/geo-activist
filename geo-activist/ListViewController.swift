@@ -69,7 +69,7 @@ class ListViewController: UIViewController {
     private func showSpinner(onView : UIView) {
         let spinnerView = UIView(frame: onView.bounds)
         spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-        let activeIndicator = UIActivityIndicatorView.init(style: .whiteLarge)
+        let activeIndicator = UIActivityIndicatorView.init(style: .large)
         activeIndicator.startAnimating()
         activeIndicator.center = spinnerView.center
         

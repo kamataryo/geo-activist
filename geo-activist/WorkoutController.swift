@@ -90,7 +90,7 @@ class WorkoutController {
     private func readWorkoutStartLocation(workoutRoute: HKWorkoutRoute, _ completion: ((AnyObject?, NSError?) -> Void)!) {
         let routeQuery = HKWorkoutRouteQuery(route: workoutRoute) { query, locationsOrNil, done, errorOrNil in
             
-            if let error = errorOrNil {
+            if (errorOrNil != nil) {
                 print("Location query error")
                 return
             }
@@ -113,7 +113,7 @@ class WorkoutController {
                     placemark?.locality ?? "",
                     placemark?.subLocality ?? ""
                 ]).filter { element in
-                    return element != "" && element != nil
+                    return element != ""
                 }
                 var startPlaceName = elements.joined(separator: ", ")
                 if startPlaceName == "" {
@@ -141,7 +141,7 @@ class WorkoutController {
         
         let routeQuery = HKWorkoutRouteQuery(route: self.workoutRoute!) { query, locationsOrNil, done, errorOrNil in
             
-            if let error = errorOrNil {
+            if (errorOrNil != nil) {
                 completion("", nil)
                 // Handle any errors here.
                 return

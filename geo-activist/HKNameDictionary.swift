@@ -86,8 +86,9 @@ struct HKNameDictionary {
         dictionary[HKWorkoutActivityType.taiChi.rawValue] = (en: "taiChi", ja: "太極拳")
         dictionary[HKWorkoutActivityType.wrestling.rawValue] = (en: "wrestling", ja: "レスリング")
         dictionary[HKWorkoutActivityType.other.rawValue] = (en: "other", ja: "その他")
-        dictionary[HKWorkoutActivityType.danceInspiredTraining.rawValue] = (en: "danceInspiredTraining", ja: "")
-        dictionary[HKWorkoutActivityType.mixedMetabolicCardioTraining.rawValue] = (en: "mixedMetabolicCardioTraining", ja: "")
+        // deprecated
+//        dictionary[HKWorkoutActivityType.danceInspiredTraining.rawValue] = (en: "danceInspiredTraining", ja: "")
+//        dictionary[HKWorkoutActivityType.mixedMetabolicCardioTraining.rawValue] = (en: "mixedMetabolicCardioTraining", ja: "")
         return dictionary
     }
 }
