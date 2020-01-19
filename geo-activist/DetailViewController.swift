@@ -16,14 +16,20 @@ class DetailViewController: UIViewController,UITableViewDataSource, UITableViewD
     
     var workoutController: WorkoutController? = nil
     private let healthKitStore: HKHealthStore = HKHealthStore()
-    
+
     @IBOutlet weak var exportButton: UIButton!
     @IBOutlet weak var geoJsonExportButton: UIButton!
+
     @IBOutlet weak var descriptionTableView: UITableView!
     @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        DispatchQueue.main.async(execute: { () -> Void in
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "戻る", style: .done, target: nil, action: #selector(self.back))
+        });
+        
         self.exportButton.addTarget(self, action: #selector(self.shareCSV), for: .touchUpInside)
         self.geoJsonExportButton.addTarget(self, action: #selector(self.shareGeoJSON), for: .touchUpInside)
         self.mapView.delegate = self
@@ -37,6 +43,10 @@ class DetailViewController: UIViewController,UITableViewDataSource, UITableViewD
                 });
             })
         }
+    }
+        
+    @objc func back() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc func shareCSV() {
@@ -126,13 +136,9 @@ class DetailViewController: UIViewController,UITableViewDataSource, UITableViewD
         return cell
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if(section == 0) {
-            return 24.0
-        } else {
-            return 10.0
-        }
+        return 10.0;
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 40.0
+        return 32.0
     }
 }
