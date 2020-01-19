@@ -20,12 +20,15 @@ class DetailViewController: UIViewController,UITableViewDataSource, UITableViewD
     @IBOutlet weak var exportButton: UIButton!
     @IBOutlet weak var geoJsonExportButton: UIButton!
 
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var descriptionTableView: UITableView!
     @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        self.tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+
         DispatchQueue.main.async(execute: { () -> Void in
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "戻る", style: .done, target: nil, action: #selector(self.back))
         });
