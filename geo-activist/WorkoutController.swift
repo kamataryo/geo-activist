@@ -40,10 +40,24 @@ class WorkoutController {
     
     init(workout: HKWorkout) {
         self.workout = workout
+        
+        let totalDistanceValue = workout.totalDistance?.doubleValue(for: .init(from: .kilometer))
+        let totalEnergyBurnedValue = workout.totalEnergyBurned?.doubleValue(for: .init(from: .kilocalorie))
+        var totalDistance = "データなし"
+        var totalEnergyBurned = "データなし"
+        
+        if totalDistanceValue != nil {
+            totalDistance = String((totalDistanceValue! * 100).rounded() / 100) + " km"
+        }
+        
+        if totalEnergyBurnedValue != nil {
+            totalEnergyBurned = String(Int(totalEnergyBurnedValue!.rounded())) + " kcal"
+        }
+
         self.startDate = workout.startDate
         self.activityName = WorkoutController.activityNameDictionary[workout.workoutActivityType.rawValue]?.ja ?? "(該当なし)"
-        self.totalDistance = String(format: "%@", workout.totalDistance ?? "データなし")
-        self.totalEnergyBurned = String(format: "%@", workout.totalEnergyBurned ?? "データなし")
+        self.totalDistance = totalDistance
+        self.totalEnergyBurned = totalEnergyBurned
     }
     
     public func query(done: @escaping () -> Void) {
