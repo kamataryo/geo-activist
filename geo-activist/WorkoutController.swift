@@ -21,21 +21,22 @@ class WorkoutController {
     static let activityNameDictionary = HKNameDictionary.get()
     
     private let workout: HKWorkout
-    private var startLocation: CLLocation? = nil
+    public var startLocation: CLLocation? = nil
     
+    // common
     public var startDate: Date
     public var dateLabel: String = ""
     public var activityName: String = "(該当なし)"
-    public var totalDistance: String = "-- km"
-    public var totalEnergyBurned: String = "-- kcal"
-    public var startLocationName: String =  "(不明な場所)"
-    
-    public var workoutRoute: HKWorkoutRoute? = nil
-    
     public var csv = ""
     public var geoJSON = ""
     public var csvFilePath: String? = nil
     public var geoJSONFilePath: String? = nil
+    public var totalEnergyBurned: String = "-- kcal"
+    public var totalDistance: String = "-- km"
+    public var startLocationName: String =  "(不明な場所)"
+
+    // route props
+    public var workoutRoute: HKWorkoutRoute? = nil
     public var polyline = MKPolyline()
     
     init(workout: HKWorkout) {

@@ -175,17 +175,17 @@ extension ListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-
+        
         if(self.noItems) {
             return cell
         } else {
             let cellItem = self.workoutCollectionController.cellItems[indexPath.section][indexPath.row]
-            
             let activityName = cellItem.activityName
             let totalDistance = cellItem.totalDistance
-//            let startLocationName = cellItem.startLocationName
+            //            let startLocationName = cellItem.startLocationName
             cell.textLabel?.text = activityName
             cell.detailTextLabel?.text = totalDistance
+                        
             return cell
         }
     }
@@ -204,7 +204,16 @@ extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(!self.noItems) {
             let cellItem = self.workoutCollectionController.cellItems[indexPath.section][indexPath.row]
-            self.performSegue(withIdentifier: "toDetail", sender: cellItem)
+            
+            if(cellItem.startLocation == nil) {
+                DispatchQueue.main.async(execute: { () -> Void in
+                    let alert = UIAlertController(title: "ルートを利用できません", message: "このワークアウトではルートが記録されていないようです。", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    self.present(alert, animated: true)
+                })
+            } else {
+                self.performSegue(withIdentifier: "toDetail", sender: cellItem)
+            }
         }
     }
     
