@@ -21,7 +21,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSHealthShareUsageDescription</key>
-	<string>This app needs to access youre workout data.</string>
+	<string>このアプリはワークアウトに関する詳細情報を表示するためにヘルスケアのデータにアクセスします。</string>
+  <key>NSHealthUpdateUsageDescription</key>
+  <string>このアプリはワークアウトに関する詳細情報を表示するためにヘルスケアのデータにアクセスします。</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
