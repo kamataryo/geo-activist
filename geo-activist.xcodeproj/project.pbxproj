@@ -496,7 +496,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "kamataryo.geo-activist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kamataryo.geo-activist";
 				PRODUCT_NAME = GeoActivist;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -516,7 +516,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "kamataryo.geo-activist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kamataryo.geo-activist";
 				PRODUCT_NAME = GeoActivist;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
